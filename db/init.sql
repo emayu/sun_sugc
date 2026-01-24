@@ -20,7 +20,7 @@ CREATE TABLE usuarios (
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
-    roles VARCHAR(20) DEFAULT 'agente', -- 'admin' o 'agente'
+    roles VARCHAR(20) DEFAULT 'usuario', -- 'admin' o 'usuario'
     configuracion JSONB DEFAULT '{}'::jsonb,
     CONSTRAINT unique_email UNIQUE (email) 
 );
@@ -44,28 +44,28 @@ CREATE TABLE instituciones (
     contacto_alterno VARCHAR(100),
     
     -- Estados y Control
-    id_estado_inst INTEGER REFERENCES cat_estados_institucion(id),
+    id_estado_institucion INTEGER REFERENCES cat_estados_institucion(id),
     id_responsable INTEGER REFERENCES usuarios(id),
     ultima_gestion_at TIMESTAMP,
     estado_mineduc VARCHAR(50),
 
     -- Contactos Originales
     tel_1 VARCHAR(20),
-    estado_t1 VARCHAR(50),
+    estado_tel1 VARCHAR(50),
     tel_2 VARCHAR(20),
-    estado_t2 VARCHAR(50),
+    estado_tel2 VARCHAR(50),
     email_1 VARCHAR(100),
-    estado_e1 VARCHAR(50),
+    estado_email1 VARCHAR(50),
     email_2 VARCHAR(100),
-    estado_e2 VARCHAR(50),
+    estado_email2 VARCHAR(50),
 
     -- Campos Nuevos para investigaciones
     tel_nuevo_1 VARCHAR(20),
-    estado_tn1 VARCHAR(50),
+    estado_tel_nuevo1 VARCHAR(50),
     tel_nuevo_2 VARCHAR(20),
-    estado_tn2 VARCHAR(50),
+    estado_tel_nuevo2 VARCHAR(50),
     tel_nuevo_3 VARCHAR(20),
-    estado_tn3 VARCHAR(50)
+    estado_tel_nuevo3 VARCHAR(50)
 );
 
 -- 4. Bitácora de Llamadas/Gestiones

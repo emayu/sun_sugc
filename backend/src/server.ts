@@ -1,7 +1,10 @@
 import express, { Express } from "express"; 
 import morgan from "morgan"; 
 import helmet from "helmet";
+
+import apiRoutes from "./routes";
 import { sendResponse } from "./utils/sendResponse";
+import { sequelize } from "./config/database";
  
 console.log( 
     'ENV:', process.env.ENV, 
@@ -15,6 +18,7 @@ const ENV = process.env.ENV || "DEV";
  
 //Middlewares base 
 server.use(helmet()) ;
+server.use(express.json());
 
 //Configuración LOGs
 if( ENV === "PROD"){ 
@@ -22,6 +26,8 @@ if( ENV === "PROD"){
 }else{ 
     server.use(morgan('dev')); 
 } 
+
+server.use("/api/v1", apiRoutes);
  
 server.get('/', (req, res)=> { 
     res.send('Hello SUGC');   
@@ -37,7 +43,16 @@ server.get('/version', (req, res) => {
 
 server.get('/healthz', (req, res) => sendResponse(res, 200, { status: "success", message:"Server is healthy"})); 
  
- 
-server.listen(PORT, ()=> { 
-    console.log(`Hello SUGC from NodeJS + Typescript. Server started on ${PORT}` ) 
-})
+async function startSever() {
+    try {
+        await sequelize.authenticate();
+        server.listen(PORT, () => {
+            console.log(`Hello SUGC from NodeJS + Typescript. Server started on ${PORT}`);
+        })
+    }catch(error){
+        console.error('No se pudo conectar con la DB', error);
+        process.exit(1);
+    }
+}
+
+startSever();
