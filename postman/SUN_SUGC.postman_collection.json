@@ -1,0 +1,345 @@
+{
+  "info": {
+    "_postman_id": "17dfa5f1-b9c5-465f-a396-ec8cb5234de5",
+    "name": "SUN SUGC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31643916"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              " pm.test(\"Status code returned Created correct\", function () {\r",
+              "     pm.response.to.have.status(200);\r",
+              " });\r",
+              "\r",
+              "pm.test(\"Content-Type is present\", function () {\r",
+              "    pm.response.to.have.header(\"Content-Type\");\r",
+              "});\r",
+              "\r",
+              "const responseData = pm.response.json();\r",
+              "pm.test(\"Result is an Object\", function () {\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"The Note has created correct\", function () {\r",
+              "    pm.expect(responseData).has.haveOwnProperty(\"status\");\r",
+              "    pm.expect(responseData).has.haveOwnProperty(\"message\");\r",
+              "    pm.expect(responseData).has.haveOwnProperty(\"data\");\r",
+              "});\r",
+              "\r",
+              "const expectedResponse = {\r",
+              "    \"status\": \"success\",\r",
+              "    \"message\": \"Login exitoso\",\r",
+              "    \"data\": {\r",
+              "        \"usuario\": \"usuario\"\r",
+              "    }\r",
+              "}\r",
+              "\r",
+              "pm.test(\"The data is the correct\", function () {\r",
+              "    pm.expect(responseData.status).to.eql(expectedResponse.status);\r",
+              "    pm.expect(responseData.message).to.eql(expectedResponse.message);\r",
+              "    pm.expect(responseData.data).to.eql(expectedResponse.data);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{protocol}}://{{host}}{{port}}/api/v1/login",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{host}}{{port}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Instituciones",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              " pm.test(\"Status code returned Created correct\", function () {\r",
+              "     pm.response.to.have.status(200);\r",
+              " });\r",
+              "\r",
+              "pm.test(\"Content-Type is present\", function () {\r",
+              "    pm.response.to.have.header(\"Content-Type\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Result is an Object with a list\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(Array.isArray(responseData.data)).to.be.true;\r",
+              "});\r",
+              "\r",
+              "\r",
+              "const expectedResponse = {\r",
+              "    \"status\": \"success\",\r",
+              "    \"message\": \"List exitoso\",\r",
+              "    \"data\": []\r",
+              "}\r",
+              "\r",
+              "pm.test(\"The data is the correct\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    pm.expect(responseData.status).to.eql(expectedResponse.status);\r",
+              "    pm.expect(responseData.message).to.eql(expectedResponse.message);\r",
+              "    pm.expect(responseData.data).to.eql(expectedResponse.data);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{protocol}}://{{host}}{{port}}/api/v1/instituciones",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{host}}{{port}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "instituciones"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Institucion historial",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              " pm.test(\"Status code returned Created correct\", function () {\r",
+              "     pm.response.to.have.status(200);\r",
+              " });\r",
+              "\r",
+              "pm.test(\"Content-Type is present\", function () {\r",
+              "    pm.response.to.have.header(\"Content-Type\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Result is an Object with a list\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(Array.isArray(responseData.data)).to.be.true;\r",
+              "});\r",
+              "\r",
+              "\r",
+              "const expectedResponse = {\r",
+              "    \"status\": \"success\",\r",
+              "    \"message\": \"List exitoso\",\r",
+              "    \"data\": []\r",
+              "}\r",
+              "\r",
+              "pm.test(\"The data is the correct\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    pm.expect(responseData.status).to.eql(expectedResponse.status);\r",
+              "    pm.expect(responseData.message).to.eql(expectedResponse.message);\r",
+              "    pm.expect(responseData.data).to.eql(expectedResponse.data);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{protocol}}://{{host}}{{port}}/api/v1/instituciones",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{host}}{{port}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "instituciones"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Institucion add gestion",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              " pm.test(\"Status code returned Created correct\", function () {\r",
+              "     pm.response.to.have.status(200);\r",
+              " });\r",
+              "\r",
+              "pm.test(\"Content-Type is present\", function () {\r",
+              "    pm.response.to.have.header(\"Content-Type\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Result is an Object with a list\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    pm.expect(responseData).to.be.an('object');\r",
+              "    pm.expect(Array.isArray(responseData.data)).to.be.true;\r",
+              "});\r",
+              "\r",
+              "\r",
+              "const expectedResponse = {\r",
+              "    \"status\": \"success\",\r",
+              "    \"message\": \"Gestion agregada\",\r",
+              "}\r",
+              "\r",
+              "pm.test(\"The data is the correct\", function () {\r",
+              "    const responseData = pm.response.json();\r",
+              "    pm.expect(responseData.status).to.eql(expectedResponse.status);\r",
+              "    pm.expect(responseData.message).to.eql(expectedResponse.message);\r",
+              "    pm.expect(responseData.data).to.eql(expectedResponse.data);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{protocol}}://{{host}}{{port}}/api/v1/instituciones/:id/gestion",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{host}}{{port}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "instituciones",
+            ":id",
+            "gestion"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "protocol",
+      "value": ""
+    },
+    {
+      "key": "host",
+      "value": ""
+    },
+    {
+      "key": "port",
+      "value": ""
+    }
+  ]
+}
