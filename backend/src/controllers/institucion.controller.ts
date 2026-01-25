@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
-import { InsitucionService } from "../services/institucion.service";
+import { InstitucionService } from "../services/institucion.service";
 import { sendResponse } from "../utils/sendResponse";
 
 export class InstitucionController {
     static async getInsitucionesByResponsable(req: Request, response: Response) {
         try{
-        //TODO: extraer id de la sesion
+            console.log(req.user)
+        const idUsuario = req.user.subId;
+        
 
-        const instituciones = await InsitucionService.getInsitucionesByResponsable(1);
+        const instituciones = await InstitucionService.getInsitucionesByResponsable(idUsuario);
         return sendResponse(response, 200, {
             status: "success",
             message: "List exitoso",

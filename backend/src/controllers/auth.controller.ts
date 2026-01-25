@@ -12,11 +12,11 @@ export async function login(req: Request, res: Response, next:NextFunction) {
     }
 
     try {
-        const result = await AuthService.login(correo, contrasena);
+        const {token, usuario} = await AuthService.login(correo, contrasena);
         return sendResponse(res, 200, {
             status: 'success',
             message: 'Login exitoso',
-            data: result
+            data: {token, usuario: usuario.nombre}
         });
     } catch (error) {
         next(error);

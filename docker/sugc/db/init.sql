@@ -11,6 +11,7 @@ CREATE TABLE cat_estados_institucion (
 CREATE TABLE cat_resultados_gestion (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) NOT null, -- Contacto exitoso, No contestan...
+    tipo VARCHAR(30),
     descripcion VARCHAR(250)
 );
 
@@ -81,3 +82,26 @@ CREATE TABLE bitacora_gestiones (
     observaciones TEXT,
     proxima_llamada timestamp with time zone 
 );
+
+
+insert into usuario(nombre, email, password_hash) value ('usuario', 'usuario', '$2b$10$eXUQxwsPGOLIwdpGmCK9te4ILPDeVuS/sgtuGjcEgzmXG1qf2NQ1q');
+
+
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Contacto exitoso','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('No contestan','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Línea dañana','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Número Equivocado','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Fuera de servicio','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Pidió re-llamar despues','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Buzón de voz','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Dato encontrado','INVESTIGACION');
+INSERT INTO cat_resultados_gestion (nombre,tipo)
+	VALUES ('Datos no encontrados','INVESTIGACION');
