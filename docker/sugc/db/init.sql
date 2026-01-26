@@ -87,21 +87,24 @@ CREATE TABLE bitacora_gestiones (
 insert into usuario(nombre, email, password_hash) value ('usuario', 'usuario', '$2b$10$eXUQxwsPGOLIwdpGmCK9te4ILPDeVuS/sgtuGjcEgzmXG1qf2NQ1q');
 
 
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Contacto exitoso','LLAMADA');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('No contestan','LLAMADA');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Línea dañana','LLAMADA');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Número Equivocado','LLAMADA');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Fuera de servicio','LLAMADA');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Pidió re-llamar despues','LLAMADA');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Buzón de voz','LLAMADA');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Dato encontrado','INVESTIGACION');
-INSERT INTO cat_resultados_gestion (nombre,tipo)
-	VALUES ('Datos no encontrados','INVESTIGACION');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Contacto exitoso','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('No contestan','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Línea dañana','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Número Equivocado','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Fuera de servicio','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Pidió re-llamar despues','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Buzón de voz','LLAMADA');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Dato encontrado','INVESTIGACION');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Datos no encontrados','INVESTIGACION');
+
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(1, '01-Pendiente', 'Estado inicial');
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(2, '02-En proceso', 'Proceso de llamadas iniciado');
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(3, '03-Seguimiento Pendiente', NULL);
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(4, '04-Llamada programada', 'Se debe llamar a la hora indicada');
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(5, '05-Investigación', 'Se encuentra en busqueda de información por internet');
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(6, '06-Invitación Enviada', 'Ya se envió la invitación');
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(7, '07-Confirmado', NULL);
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(8, '08-Declinado', NULL);
+
+
+select * from cat_estados_institucion cei order by nombre;

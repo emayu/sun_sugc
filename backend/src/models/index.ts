@@ -2,6 +2,10 @@ import { Usuario } from "./usuario.model";
 import { Institucion } from "./institucion.model";
 import { Bitacora } from "./bitacora.model";
 import { ResultadoGestion } from "./resultadoGestion.model";
+import { EstadoInstitucion } from "./estadoInstitucion.model";
+
+
+Institucion.belongsTo( EstadoInstitucion, {foreignKey:'id_estado_institucion', as:'estado'});
 
 
 Bitacora.belongsTo(Institucion, {foreignKey: 'id_institucion'});
@@ -12,5 +16,6 @@ export {
     Usuario,
     Institucion,
     Bitacora,
-    ResultadoGestion
+    ResultadoGestion,
+    EstadoInstitucion
 }
