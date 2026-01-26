@@ -5,8 +5,8 @@ import { Bitacora, ResultadoGestion, Usuario } from "../models";
 
 export class BitacoraRepository {
 
-    static async create( data:BitacoraCreationModel){
-        return await Bitacora.create(data)
+    static async create( data:BitacoraCreationModel, transaction?:Transaction){
+        return await Bitacora.create(data, { transaction });
     }
 
 

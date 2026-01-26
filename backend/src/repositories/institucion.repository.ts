@@ -1,4 +1,4 @@
-import { where } from "sequelize";
+import { Transaction, where } from "sequelize";
 import { sequelize } from "../config/database";
 import { Institucion, InstitucionModel } from "../models/institucion.model";
 
@@ -11,6 +11,12 @@ export class InstitucionRepository{
     }
 
     static async findById(id:number):Promise<InstitucionModel | null>{
-        return await Institucion.findOne({ where: {id}});
+        return await Institucion.findOne({ where: {id}, include: ['estado'] });
+    }
+
+    static update(data:InstitucionModel, transaction?:Transaction){
+        return Institucion.update(data, { 
+            where: { id: data.id },
+            transaction });
     }
 }

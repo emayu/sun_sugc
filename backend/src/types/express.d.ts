@@ -1,13 +1,17 @@
+import {Request} from "express-serve-static-core";
 
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        id: string;
-        nombre: string;
-        roles: string[];
-      }
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: {
+      subId: number;
+      nombre: string;
+      roles: string[];
     }
   }
+}
+
+
+export interface TypedRequestBody<T> extends Request{
+  body: T;
 }

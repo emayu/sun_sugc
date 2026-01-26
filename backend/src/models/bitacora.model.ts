@@ -9,7 +9,7 @@ export interface BitacoraModel {
     fecha_gestion_final: Date;
     accion: string, 
     medio_contacto: string;
-    id_resultado: string;
+    id_resultado: number;
     observaciones: string;
     proxima_llamada: Date;
 }
@@ -25,7 +25,7 @@ export class Bitacora extends Model<BitacoraModel, BitacoraCreationModel> implem
     fecha_gestion_final!: Date;
     accion!: string;
     medio_contacto!: string;
-    id_resultado!: string;
+    id_resultado!: number;
     observaciones!: string;
     proxima_llamada!: Date;
 }
@@ -38,7 +38,7 @@ Bitacora.init({
     fecha_gestion_final: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     accion: { type: DataTypes.STRING(50) }, // "Llamada T1", "WhatsApp", etc.
     medio_contacto: { type: DataTypes.STRING(50) }, // El número específico al que se llamó
-    id_resultado: { type: DataTypes.STRING(100) }, // "Contacto exitoso", "No contestó"
+    id_resultado: { type: DataTypes.INTEGER}, // "Contacto exitoso", "No contestó"
     observaciones: { type: DataTypes.TEXT },
     proxima_llamada: { type: DataTypes.DATE } 
 }, {
