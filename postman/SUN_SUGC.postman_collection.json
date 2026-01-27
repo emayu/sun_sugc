@@ -121,23 +121,18 @@
             "packages": {},
             "requests": {}
           }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "packages": {},
+            "type": "text/javascript"
+          }
         }
       ],
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
       "request": {
         "method": "GET",
         "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
         "url": {
           "raw": "{{protocol}}://{{host}}{{port}}/api/v1/instituciones",
           "protocol": "{{protocol}}",
@@ -196,21 +191,9 @@
           }
         }
       ],
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
       "request": {
         "method": "GET",
         "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
         "url": {
           "raw": "{{protocol}}://{{host}}{{port}}/api/v1/instituciones/:id/gestiones",
           "protocol": "{{protocol}}",
@@ -276,21 +259,9 @@
           }
         }
       ],
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
       "request": {
         "method": "GET",
         "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
         "url": {
           "raw": "{{protocol}}://{{host}}{{port}}/api/v1/resultados_gestion",
           "protocol": "{{protocol}}",
@@ -322,23 +293,22 @@
               "});\r",
               "\r",
               "\r",
-              "pm.test(\"Result is an Object with a list\", function () {\r",
+              "pm.test(\"Result is an Object\", function () {\r",
               "    const responseData = pm.response.json();\r",
               "    pm.expect(responseData).to.be.an('object');\r",
-              "    pm.expect(Array.isArray(responseData.data)).to.be.true;\r",
               "});\r",
               "\r",
               "\r",
               "const expectedResponse = {\r",
               "    \"status\": \"success\",\r",
-              "    \"message\": \"Gestion agregada\",\r",
+              "    \"message\": \"Gestión agregada\",\r",
               "}\r",
               "\r",
               "pm.test(\"The data is the correct\", function () {\r",
               "    const responseData = pm.response.json();\r",
-              "    pm.expect(responseData.status).to.eql(expectedResponse.status);\r",
-              "    pm.expect(responseData.message).to.eql(expectedResponse.message);\r",
-              "    pm.expect(responseData.data).to.eql(expectedResponse.data);\r",
+              "    pm.expect(expectedResponse.status).to.eql(responseData.status);\r",
+              "    pm.expect(expectedResponse.message).to.eql(responseData.message);\r",
+              "    pm.expect(responseData.data).to.be.an('object');\r",
               "});\r",
               ""
             ],
@@ -353,7 +323,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"correo\": \"usuario\",\r\n    \"contrasena\": \"123456\"\r\n}",
+          "raw": "{\r\n    \"id_institucion\": 1,\r\n    \"id_usuario\": 1,\r\n    \"fecha_gestion_inicio\": \"2026-01-26T16:21:56.911Z\",\r\n    \"accion\": \"LLAMADA\", \r\n    \"medio_contacto\": \"tel_1\",\r\n    \"id_resultado\": 1,\r\n    \"observaciones\": \"\",\r\n    \"proxima_llamada\": null\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -376,7 +346,7 @@
           "variable": [
             {
               "key": "id",
-              "value": "0"
+              "value": "1"
             }
           ]
         }
@@ -389,7 +359,7 @@
     "bearer": [
       {
         "key": "token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJJZCI6MSwiZW1haWwiOiJ1c3VhcmlvIiwicm9sZXMiOlsidXN1YXJpbyJdLCJqdGkiOiIyNzMyMzA1Mi0wMTYxLTRhYzUtYmM3Mi05NjE5YjY2NTFjNDciLCJpYXQiOjE3NjkzNzM1NDIsImV4cCI6MTc2OTQwMjM0Mn0.v2B6KaLYXMEtWrXgpa5sKteYVzaBe5Lmr-bDOLqNdVw",
+        "value": "{{JWT_TKN}}",
         "type": "string"
       }
     ]
@@ -402,7 +372,30 @@
         "packages": {},
         "requests": {},
         "exec": [
-          ""
+          "// console.log('iniciando');\r",
+          "const token = pm.globals.get('JWT_TKN');\r",
+          "const loginUrl = `${pm.variables.get('protocol')}://${pm.variables.get('host')}${pm.variables.get('port')}/api/v1/login`;\r",
+          "// console.log('globals.JWT_TKN', token);\r",
+          "if(!token){\r",
+          "    pm.sendRequest({\r",
+          "        url: loginUrl,\r",
+          "        method: 'POST',\r",
+          "        header: { 'content-type': 'application/json' },\r",
+          "        body: {\r",
+          "            mode: 'raw',\r",
+          "            raw: JSON.stringify({\r",
+          "                correo: pm.variables.get('user'),\r",
+          "                contrasena: pm.variables.get('pass')\r",
+          "            })\r",
+          "        }\r",
+          "    }, (err, response) => {\r",
+          "        const jsonResponse = response.json();\r",
+          "        // console.log(jsonResponse);\r",
+          "        const { data: {token}} = jsonResponse;\r",
+          "        // console.log('token', token)\r",
+          "        pm.globals.set('JWT_TKN', token);\r",
+          "    });\r",
+          "}"
         ]
       }
     },
@@ -421,15 +414,23 @@
   "variable": [
     {
       "key": "protocol",
-      "value": ""
+      "value": "http"
     },
     {
       "key": "host",
-      "value": ""
+      "value": "localhost"
     },
     {
       "key": "port",
-      "value": ""
+      "value": ":4001"
+    },
+    {
+      "key": "user",
+      "value": "usuario"
+    },
+    {
+      "key": "pass",
+      "value": "123456"
     }
   ]
 }

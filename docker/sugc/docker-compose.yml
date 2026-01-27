@@ -12,7 +12,10 @@ services:
     volumes:
      - type: bind
        source: ../../backend
-       target: /home/node/app
+       target: /home/node/app 
+     - type: bind
+       source: ../../postman
+       target: /home/node/postman 
     restart: unless-stopped
     hostname: node
     ports:
@@ -20,18 +23,18 @@ services:
     environment:
       TZ: America/Guatemala
       ENV: DEV 
-  db:
-    image: postgres:10.19
-    restart: unless-stopped
-    ports:
-      - 5432:5432
-    hostname: db.postgres-1
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - pgdata:/var/lib/postgresql/data 
-      - ./db:/docker-entrypoint-initdb.d
+  # db:
+  #   image: postgres:10.19
+  #   restart: unless-stopped
+  #   ports:
+  #     - 5432:5432
+  #   hostname: db.postgres-1
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data 
+  #     - ./db:/docker-entrypoint-initdb.d
 volumes:
   pgdata:
 
