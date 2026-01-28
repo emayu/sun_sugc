@@ -52,21 +52,21 @@ CREATE TABLE instituciones (
 
     -- Contactos Originales
     tel_1 VARCHAR(20),
-    estado_tel1 VARCHAR(50),
+    estado_tel_1 VARCHAR(50),
     tel_2 VARCHAR(20),
-    estado_tel2 VARCHAR(50),
+    estado_tel_2 VARCHAR(50),
     email_1 VARCHAR(100),
-    estado_email1 VARCHAR(50),
+    estado_email_1 VARCHAR(50),
     email_2 VARCHAR(100),
-    estado_email2 VARCHAR(50),
+    estado_email_2 VARCHAR(50),
 
     -- Campos Nuevos para investigaciones
     tel_nuevo_1 VARCHAR(20),
-    estado_tel_nuevo1 VARCHAR(50),
+    estado_tel_nuevo_1 VARCHAR(50),
     tel_nuevo_2 VARCHAR(20),
-    estado_tel_nuevo2 VARCHAR(50),
+    estado_tel_nuevo_2 VARCHAR(50),
     tel_nuevo_3 VARCHAR(20),
-    estado_tel_nuevo3 VARCHAR(50)
+    estado_tel_nuevo_3 VARCHAR(50)
 );
 
 -- 4. Bitácora de Llamadas/Gestiones
@@ -84,7 +84,7 @@ CREATE TABLE bitacora_gestiones (
 );
 
 
-insert into usuario(nombre, email, password_hash) value ('usuario', 'usuario', '$2b$10$eXUQxwsPGOLIwdpGmCK9te4ILPDeVuS/sgtuGjcEgzmXG1qf2NQ1q');
+insert into usuarios(nombre, email, password_hash) values ('usuario', 'usuario', '$2b$10$eXUQxwsPGOLIwdpGmCK9te4ILPDeVuS/sgtuGjcEgzmXG1qf2NQ1q');
 
 
 INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Contacto exitoso','LLAMADA');

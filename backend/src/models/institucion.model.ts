@@ -22,19 +22,19 @@ export interface InstitucionModel {
 	ultima_gestion_at: Date;
 	estado_mineduc: string;
 	tel_1: string;
-	estado_tel1: string;
+	estado_tel_1: string;
 	tel_2: string;
-	estado_tel2: string;
+	estado_tel_2: string;
 	email_1: string;
-	estado_email1: string;
+	estado_email_1: string;
 	email_2: string;
-	estado_email2: string;
+	estado_email_2: string;
 	tel_nuevo_1: string;
-	estado_tel_nuevo1: string;
+	estado_tel_nuevo_1: string;
 	tel_nuevo_2: string;
-	estado_tel_nuevo2: string;
+	estado_tel_nuevo_2: string;
 	tel_nuevo_3: string;
-	estado_tel_nuevo3: string;
+	estado_tel_nuevo_3: string;
 }
 
 interface InstitucionCreationModel extends Optional<InstitucionModel, 'id'>{}
@@ -60,19 +60,19 @@ export class Institucion extends Model<InstitucionModel, InstitucionCreationMode
     ultima_gestion_at!: Date;
     estado_mineduc!: string;
     tel_1!: string;
-    estado_tel1!: string;
+    estado_tel_1!: string;
     tel_2!: string;
-    estado_tel2!: string;
+    estado_tel_2!: string;
     email_1!: string;
-    estado_email1!: string;
+    estado_email_1!: string;
     email_2!: string;
-    estado_email2!: string;
+    estado_email_2!: string;
     tel_nuevo_1!: string;
-    estado_tel_nuevo1!: string;
+    estado_tel_nuevo_1!: string;
     tel_nuevo_2!: string;
-    estado_tel_nuevo2!: string;
+    estado_tel_nuevo_2!: string;
     tel_nuevo_3!: string;
-    estado_tel_nuevo3!: string;
+    estado_tel_nuevo_3!: string;
 
 }
 
@@ -101,19 +101,19 @@ Institucion.init({
 	ultima_gestion_at: {type: DataTypes.DATE },
 	estado_mineduc: {type: DataTypes.STRING},
 	tel_1: {type: DataTypes.STRING},
-	estado_tel1: {type: DataTypes.STRING},
+	estado_tel_1: {type: DataTypes.STRING},
 	tel_2: {type: DataTypes.STRING},
-	estado_tel2: {type: DataTypes.STRING},
+	estado_tel_2: {type: DataTypes.STRING},
 	email_1: {type: DataTypes.STRING},
-	estado_email1: {type: DataTypes.STRING},
+	estado_email_1: {type: DataTypes.STRING},
 	email_2: {type: DataTypes.STRING},
-	estado_email2: {type: DataTypes.STRING},
+	estado_email_2: {type: DataTypes.STRING},
 	tel_nuevo_1: {type: DataTypes.STRING},
-	estado_tel_nuevo1: {type: DataTypes.STRING},
+	estado_tel_nuevo_1: {type: DataTypes.STRING},
 	tel_nuevo_2: {type: DataTypes.STRING},
-	estado_tel_nuevo2: {type: DataTypes.STRING},
+	estado_tel_nuevo_2: {type: DataTypes.STRING},
 	tel_nuevo_3: {type: DataTypes.STRING},
-	estado_tel_nuevo3: {type: DataTypes.STRING},
+	estado_tel_nuevo_3: {type: DataTypes.STRING},
 },{
     sequelize,
     tableName: 'instituciones',
