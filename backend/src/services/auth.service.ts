@@ -18,7 +18,7 @@ export class AuthService {
         }
         const roles = user.roles.split(',');
 
-        const token = issueToken({id:user.id, email: user.email, roles: roles})
+        const token = issueToken({id:user.id, email: user.email, roles: roles});
 
         return {
             token,
