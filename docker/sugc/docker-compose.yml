@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   sugc-backend:
-    image: node:17.7.1
+    image: node:iron
     command: "npm run dev"
     # build:
     #   context: ../../backend_saar
