@@ -9,12 +9,12 @@ export class AuthService {
         const user = await UsuarioRepository.findByEmail(email);
 
         if(!user){
-            throw Error("Credenciales invalidas")
+            throw new Error("Credenciales invalidas");
         }
-        const ok = bcrypt.compare(password, user.password_hash);
 
+        const ok = await bcrypt.compare(password, user.password_hash);
         if(!ok){
-            throw Error("Credenciales invalidas")
+            throw new Error("Credenciales invalidas");
         }
         const roles = user.roles.split(',');
 
