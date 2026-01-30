@@ -1,0 +1,18 @@
+@if (authService.isLoggedIn()) {
+<header class="main">
+  <div class="content">
+    <div class="left-side">
+
+      <h1>{{ title }} 💻</h1>
+      <h4>{{project_name}}</h4>
+
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="right-side">
+    </div>
+  </div>
+</header>
+}
+<main>
+  <router-outlet />
+</main>

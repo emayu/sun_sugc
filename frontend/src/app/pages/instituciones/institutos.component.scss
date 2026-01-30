@@ -1,0 +1,40 @@
+.dashboard-container {
+  padding: 24px;
+
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .name-info {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    .main-name { font-weight: 500; color: #333; }
+    .sub-code { font-size: 0.75rem; color: #777; }
+  }
+
+  .badge {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    padding: 100px;
+  }
+}

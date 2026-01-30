@@ -1,0 +1,88 @@
+<div class="dashboard-container">
+  <div class="header-actions">
+    <h2>Panel de Gestión de Instituciones</h2>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Filtro rápido</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Nombre o Código" #input>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  @if (isLoading) {
+    <div class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <div class="mat-elevation-z8 table-responsive">
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Institución </th>
+          <td mat-cell *matCellDef="let element"> 
+            <div class="name-info">
+              <span class="main-name">{{element.nombre_establecimiento}}</span>
+              <span class="sub-code">{{element.codigo_mineduc}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let element">
+            @if(element.estado){
+              <mat-chip class="badge" [ngClass]="'status-' + element.id_estado_inst">
+                 {{element.estado.nombre}}
+              </mat-chip>
+            }
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefonos">
+          <th mat-header-cell *matHeaderCellDef> Teléfonos </th>
+          <td mat-cell *matCellDef="let element">
+             <div style="align-items: center;">
+                <mat-icon inline>looks_one</mat-icon> {{element.tel_1}} {{element.estado_tel_1}}
+             </div>
+             <div>
+              <mat-icon inline>looks_two</mat-icon> {{element.tel_2}} {{element.estado_tel_2}}
+             </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ultima_gestion">
+          <th mat-header-cell *matHeaderCellDef> Última Gestión </th>
+          <td mat-cell *matCellDef="let element"> 
+            {{ element.ultima_gestion_at ? (element.ultima_gestion_at | date:'dd/MMMM/yyyy HH:mm') : 'Sin gestiones' }} 
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" (click)="abrirGestion(element)">
+              <mat-icon>call</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          @if(input.value){
+            <td class="mat-cell" colspan="6">No se encontraron instituciones con el filtro "{{input.value}}"</td>
+          } @else {
+            <td class="mat-cell" colspan="6">No tiene instituciones asignadas.</td>
+          }
+          
+        </tr>
+      </table>
+    </div>
+  }
+</div>
