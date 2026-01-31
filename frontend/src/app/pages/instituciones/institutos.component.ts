@@ -11,16 +11,26 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { InstitucionesService } from '../../services/instituciones.service';
+import { BitacoraDto, InstitucionesService } from '../../services/instituciones.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
+import { StatusInstitutosBadgeComponent } from '../../components/status-institutos-badge/status-institutos-badge.component';
 
 @Component({
   selector: 'app-institutos',
   standalone: true,
   imports: [
-    CommonModule, MatTableModule, MatFormFieldModule, 
-    MatInputModule, MatButtonModule, MatIconModule, 
-    MatChipsModule, MatDialogModule, MatProgressSpinnerModule
-  ],
+    CommonModule, MatTableModule, MatFormFieldModule,
+    MatInputModule, MatButtonModule, MatIconModule,
+    MatChipsModule, MatDialogModule, MatProgressSpinnerModule,
+    MatSnackBarModule, MatSidenavModule, MatListModule,
+	MatDividerModule, ClipboardModule,
+    StatusInstitutosBadgeComponent
+],
   templateUrl: './institutos.component.html',
   styleUrl: './institutos.component.scss'
 })
@@ -29,8 +39,12 @@ export class InstitutosComponent implements OnInit {
   dataSource = new MatTableDataSource<InstitucionDto>([]);
   displayedColumns: string[] = ['id', 'nombre', 'estado', 'telefonos', 'ultima_gestion', 'acciones'];
   isLoading = false;
+  selectedInst:InstitucionDto | null = null;
+  historial: BitacoraDto[] = [];
 
   institucionesService = inject(InstitucionesService);
+  private snackBar = inject(MatSnackBar);
+
   ngOnInit(): void {
 	console.log('init');
 	this.isLoading = true;
@@ -39,8 +53,13 @@ export class InstitutosComponent implements OnInit {
 			console.log(response);
 			this.dataSource.data = response;
 		},
-		complete: () => { this.isLoading = false;}
-	});
+		error: (err) => {
+			console.error(err);
+			this.snackBar.open('Error: ' + err, 'x', { duration: 3000 });
+		}
+	}).add(() => { 
+			this.isLoading = false;
+		});
   }
 
   applyFilter(event: Event) {
@@ -50,6 +69,28 @@ export class InstitutosComponent implements OnInit {
   abrirGestion(inst: any) {
     // Aquí invocarás al Modal que creamos antes
     console.log('Abriendo gestión para:', inst.id);
+  }
+
+  verDetalle(inst:InstitucionDto, sidenav:any){
+	this.selectedInst = inst;
+    sidenav.open();
+
+	this.institucionesService.getHistorial(inst.id!).subscribe(response =>{
+		console.log('historial', response);
+		this.historial = response;
+	})
+  }
+
+  limpiarSeleccion(){
+	this.selectedInst = null;
+  }
+
+  onEmailCopied(){
+	this.snackBar.open('Correo copiado!', 'x', { duration: 1500 });
+  }
+
+  onTextCopied(){
+	this.snackBar.open('Texto copiado!', 'x', { duration: 1500 });
   }
 
 }
@@ -89,9 +130,11 @@ export interface InstitucionDto {
 	estado_tel_nuevo_2: string;
 	tel_nuevo_3: string;
 	estado_tel_nuevo_3: string;
-  estado?: {
+	estado?: EstadoInstitutoDto
+}
+
+export interface EstadoInstitutoDto{
     id: number;
     nombre: string;
     descripcion?: string;
   }
-}

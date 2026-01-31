@@ -1,0 +1,18 @@
+.badge {
+  padding: 4px 12px;
+  border-radius: 12px; 
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  letter-spacing: 0.5px;
+}
+
+// Mapeo de colores
+.status-1 { background-color: #f5f5f5; color: #616161; } // Pendiente (Gris)
+
+.status-3, .status-4 { background-color: #fff3e0; color: #e65100; } // Seguimiento pendiente, Llamada programada (Naranja)
+.status-2, .status-5, .status-6 { background-color: #e3f2fd; color:  #1565c0; } // En proceso, Investigación, Invitación enviada (Naranja)
+
+.status-7 { background-color: #e8f5e9; color: #2e7d32; } // Confirmado (Verde)
+.status-8 { background-color: #ffebee; color: #c62828; } // No interesado (Rojo)

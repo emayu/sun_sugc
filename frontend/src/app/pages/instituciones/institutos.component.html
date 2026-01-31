@@ -1,7 +1,7 @@
 <div class="dashboard-container">
   <div class="header-actions">
     <h2>Panel de Gestión de Instituciones</h2>
-    
+
     <mat-form-field appearance="outline">
       <mat-label>Filtro rápido</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Nombre o Código" #input>
@@ -10,79 +10,175 @@
   </div>
 
   @if (isLoading) {
-    <div class="spinner-container">
-      <mat-spinner></mat-spinner>
-    </div>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
   } @else {
-    <div class="mat-elevation-z8 table-responsive">
-      <table mat-table [dataSource]="dataSource">
+  <mat-sidenav-container class="dashboard-container">
 
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> ID </th>
-          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container>
+    <mat-sidenav #sidenav position="end" mode="over" class="details-sidebar" (closed)="limpiarSeleccion()" >
+      @if (selectedInst) {
+      <div class="sidebar-header">
+        <button mat-icon-button (click)="sidenav.close()"><mat-icon>close</mat-icon></button>
+        <!-- <button mat-icon-button><mat-icon>chevron_left</mat-icon></button>
+        <button mat-icon-button><mat-icon>chevron_right</mat-icon></button> -->
+        <h3>Detalles de la Institución</h3>
+      </div>
 
-        <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef> Institución </th>
-          <td mat-cell *matCellDef="let element"> 
-            <div class="name-info">
-              <span class="main-name">{{element.nombre_establecimiento}}</span>
-              <span class="sub-code">{{element.codigo_mineduc}}</span>
-            </div>
-          </td>
-        </ng-container>
+      <div class="sidebar-content">
+        <section class="info-card">
+          <h2>{{ selectedInst.nombre_establecimiento }} <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.nombre_establecimiento" (cdkCopyToClipboardCopied)="onTextCopied()"><mat-icon>content_copy</mat-icon></button></h2> 
+          <app-status-institutos-badge [estado]="selectedInst.estado"></app-status-institutos-badge>
 
-        <ng-container matColumnDef="estado">
-          <th mat-header-cell *matHeaderCellDef> Estado </th>
-          <td mat-cell *matCellDef="let element">
-            @if(element.estado){
-              <mat-chip class="badge" [ngClass]="'status-' + element.id_estado_inst">
-                 {{element.estado.nombre}}
-              </mat-chip>
+          <div class="contact-info">
+            <p><strong>Código MINEDUC:</strong> {{ selectedInst.codigo_mineduc }}</p>
+            <p><strong>Director:</strong> {{ selectedInst.director}} </p>
+            <p><strong>Dirección:</strong> {{ selectedInst.direccion}} </p>
+            <p><strong>Jornada:</strong> {{ selectedInst.jornada}} </p>
+            <p><strong>Email principal:</strong> <a href="mailto:{{selectedInst.email_1}}">{{selectedInst.email_1}}</a>  {{ selectedInst.estado_email_1}}
+               <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.email_1" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
+            </p>
+            @if(selectedInst.email_2){
+              <p><strong>Email alternat.:</strong> <a href="mailto:{{ selectedInst.email_2}}">{{ selectedInst.email_2}}</a> {{ selectedInst.estado_email_2}}
+                <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.email_2" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
+              </p>
+            } 
+            <p><strong>Teléfono principal:</strong> {{ selectedInst.tel_1}} {{ selectedInst.estado_tel_1}} </p>
+            <p><strong>Teléfono alternat.:</strong> {{ selectedInst.tel_2}} {{ selectedInst.estado_tel_2}} </p>
+            @if (selectedInst.estado_tel_nuevo_1) {
+              <p><strong>Teléfono nuevo 1:</strong> {{ selectedInst.tel_nuevo_1}} {{ selectedInst.estado_tel_nuevo_1}} </p>
             }
-          </td>
-        </ng-container>
+            @if (selectedInst.estado_tel_nuevo_2) {
+              <p><strong>Teléfono nuevo 2:</strong> {{ selectedInst.tel_nuevo_2}} {{ selectedInst.estado_tel_nuevo_2}} </p>
+            }
+            @if (selectedInst.estado_tel_nuevo_3) {
+              <p><strong>Teléfono nuevo 3:</strong> {{ selectedInst.tel_nuevo_3}} {{ selectedInst.estado_tel_nuevo_3}} </p>
+            }
+          </div>
+        </section>
 
-        <ng-container matColumnDef="telefonos">
-          <th mat-header-cell *matHeaderCellDef> Teléfonos </th>
-          <td mat-cell *matCellDef="let element">
-             <div style="align-items: center;">
+        <mat-divider></mat-divider>
+
+        <section class="timeline-section">
+          <h4>Bitácora de Gestiones</h4>
+          <div class="timeline">
+            @for (h of historial; track h.id) {
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <span class="date">{{ h.fecha_gestion_final | date:'short' }}</span>
+                <p class="action"><strong>{{ h.accion }} {{ h.medio_contacto ? "- " + h.medio_contacto : ""}}:</strong> {{ h.resultado.nombre }}</p>
+                <p class="notes">{{ h.observaciones }}</p> 
+              </div>
+            </div>
+            } @empty {
+            <p class="empty-msg">No hay gestiones registradas aún.</p>
+            }
+          </div>
+        </section>
+      </div>
+
+      <div class="sidebar-footer">
+        <button mat-raised-button color="primary" class="full-width" (click)="abrirGestion(selectedInst)">
+          REGISTRAR NUEVA ACCIÓN
+        </button>
+      </div>
+      }
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="mat-elevation-z8 table-responsive">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Institución </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="name-info">
+                <span class="main-name">{{element.nombre_establecimiento}}</span>
+                <span class="sub-code">{{element.codigo_mineduc}}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element">
+              @if(element.estado){
+              <app-status-institutos-badge [estado]="element.estado" />
+              }
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="telefonos">
+            <th mat-header-cell *matHeaderCellDef> Teléfonos </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="phone-info">
                 <mat-icon inline>looks_one</mat-icon> {{element.tel_1}} {{element.estado_tel_1}}
-             </div>
-             <div>
-              <mat-icon inline>looks_two</mat-icon> {{element.tel_2}} {{element.estado_tel_2}}
-             </div>
-          </td>
-        </ng-container>
+              </div>
+              <div class="phone-info">
+                <mat-icon inline>looks_two</mat-icon> {{element.tel_2}} {{element.estado_tel_2}}
+              </div>
+              @if(element.tel_nuevo_1){
+              <div class="phone-info">
+                <mat-icon inline title="tel nuevo 1">add_ic_call</mat-icon> {{element.tel_nuevo_1}}
+                {{element.estado_tel_nuevo_1}}
+              </div>
+              }
+              @if(element.tel_nuevo_2){
+              <div class="phone-info">
+                <mat-icon inline title="tel nuevo 2">add_ic_call</mat-icon> {{element.tel_nuevo_2}}
+                {{element.estado_tel_nuevo_2}}
+              </div>
+              }
+              @if(element.tel_nuevo_3){
+              <div class="phone-info">
+                <mat-icon inline title="tel nuevo 3">add_ic_call</mat-icon> {{element.tel_nuevo_3}}
+                {{element.estado_tel_nuevo_3}}
+              </div>
+              }
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="ultima_gestion">
-          <th mat-header-cell *matHeaderCellDef> Última Gestión </th>
-          <td mat-cell *matCellDef="let element"> 
+          <ng-container matColumnDef="ultima_gestion">
+            <th mat-header-cell *matHeaderCellDef> Última Gestión </th>
+            <td mat-cell *matCellDef="let element">
             {{ element.ultima_gestion_at ? (element.ultima_gestion_at | date:'dd/MMMM/yyyy HH:mm') : 'Sin gestiones' }} 
-          </td>
-        </ng-container>
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef> Acciones </th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="accent" (click)="abrirGestion(element)">
-              <mat-icon>call</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button  (click)="verDetalle(element, sidenav)">
+                Ver detalle
+              </button>
+            </td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            [class.active-row]="row.id === selectedInst?.id"
+            class="clickable-row"
+            (click)="verDetalle(row, sidenav)">
 
-        <tr class="mat-row" *matNoDataRow>
-          @if(input.value){
+          </tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            @if(input.value){
             <td class="mat-cell" colspan="6">No se encontraron instituciones con el filtro "{{input.value}}"</td>
-          } @else {
+            } @else {
             <td class="mat-cell" colspan="6">No tiene instituciones asignadas.</td>
-          }
-          
-        </tr>
-      </table>
-    </div>
+            }
+
+          </tr>
+        </table>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
   }
 </div>

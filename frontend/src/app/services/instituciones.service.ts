@@ -22,4 +22,34 @@ export class InstitucionesService extends AbstractService{
         catchError(this.handleError)
       );
    }
+
+  getHistorial(id: number): Observable<any> {
+    return this.http.get(`${this.BASE_API_URL}/${id}/gestiones`)
+      .pipe(
+        map((response: any) => response.data),
+        catchError(this.handleError)
+      );
+  }
+}
+
+
+export interface BitacoraDto {
+    id: number;
+    id_institucion: number;
+    id_usuario: number;
+    fecha_gestion_inicio: Date;
+    fecha_gestion_final: Date;
+    accion: string, 
+    medio_contacto: string;
+    id_resultado: number;
+    resultado: ResultadoBitacoraDto;
+    observaciones: string;
+    proxima_llamada: Date;
+}
+
+export interface ResultadoBitacoraDto{
+    id: number;
+    nombre: string;
+    tipo: string;
+    descripcion?: string;
 }
