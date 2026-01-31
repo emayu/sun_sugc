@@ -96,6 +96,7 @@ INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Pidió re-llamar despu
 INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Buzón de voz','LLAMADA');
 INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Dato encontrado','INVESTIGACION');
 INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Datos no encontrados','INVESTIGACION');
+INSERT INTO cat_resultados_gestion (nombre,tipo) VALUES ('Correo enviado','SISTEMA');
 
 INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(1, '01-Pendiente', 'Estado inicial');
 INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(2, '02-En proceso', 'Proceso de llamadas iniciado');
