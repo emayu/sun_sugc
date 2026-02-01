@@ -1,0 +1,24 @@
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+//   padding-top: 10px;
+}
+
+.full-width { width: 100%; }
+
+.phone-selector {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+
+  p { font-weight: 500; margin-bottom: 10px; font-size: 0.9rem; }
+}
+
+.phone-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>Registrar Gestión</h2>
+<mat-dialog-content [formGroup]="gestionForm" class="modal-container">
+  
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Acción</mat-label>
+    <mat-select formControlName="accion">
+      <mat-option value="LLAMADA">Llamada Telefónica</mat-option>
+      <mat-option value="INVESTIGACION">Investigación</mat-option>
+      <mat-option value="WhatsApp">WhatsApp</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  @if (gestionForm.get('accion')?.value === 'LLAMADA'
+     || gestionForm.get('accion')?.value === 'WhatsApp') {
+    <div class="phone-selector">
+      <p>Seleccionar número y marcar:</p>
+      <mat-radio-group formControlName="medio_contacto">
+        @for (t of telefonosDisponibles; track t.numero) {
+          <div class="phone-row">
+            <mat-radio-button [value]="t.numero">
+              {{ t.label }}: {{ t.numero }}
+            </mat-radio-button>
+            @if(gestionForm.get('accion')?.value === 'LLAMADA'){
+            <button mat-icon-button color="primary" (click)="ejecutarLlamada(t.numero)" type="button">
+              <mat-icon>phone_forwarded</mat-icon>
+            </button>
+            }
+          </div>
+        }
+      </mat-radio-group>
+    </div>
+  }
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Resultado de la gestión</mat-label>
+    <mat-select formControlName="id_resultado"  >
+      @for( result of getTiposResultados(); track result){
+        <mat-option [value]="result.id">{{result.nombre}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  @if (gestionForm.get('id_resultado')?.value === 8 || gestionForm.get('accion')?.value === 'Investigacion') {
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nuevo número encontrado</mat-label>
+      <input matInput formControlName="nuevo_telefono" placeholder="Ej: 55443322">
+      <mat-icon matSuffix>add_call</mat-icon>
+    </mat-form-field>
+  }
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Observaciones</mat-label>
+    <textarea matInput formControlName="observaciones" rows="3"></textarea>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>CANCELAR</button>
+  <button mat-raised-button color="primary" 
+          [disabled]="gestionForm.invalid" 
+          (click)="guardar()">
+    GUARDAR GESTIÓN
+  </button>
+</mat-dialog-actions>

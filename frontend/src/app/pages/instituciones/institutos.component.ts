@@ -19,6 +19,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { StatusInstitutosBadgeComponent } from '../../components/status-institutos-badge/status-institutos-badge.component';
+import { ModalGestionComponent } from '../../components/modal-gestion/modal-gestion.component';
 
 @Component({
   selector: 'app-institutos',
@@ -44,6 +45,7 @@ export class InstitutosComponent implements OnInit {
 
   institucionesService = inject(InstitucionesService);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
 
   ngOnInit(): void {
 	console.log('init');
@@ -66,14 +68,27 @@ export class InstitutosComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  abrirGestion(inst: any) {
-    // Aquí invocarás al Modal que creamos antes
+
+  abrirGestion(inst: InstitucionDto) {
+    const horaInicio = new Date();
+	const dialogRef = this.dialog.open(ModalGestionComponent, {
+		data: {
+			institucion: inst,
+			fechaInicio: horaInicio
+		},
+		width: '550px',
+		position: {
+			right: '50%'
+		},
+		disableClose: true,
+		// hasBackdrop: false
+	})
     console.log('Abriendo gestión para:', inst.id);
   }
 
   verDetalle(inst:InstitucionDto, sidenav:any){
 	this.selectedInst = inst;
-    sidenav.open();
+    sidenav?.open();
 
 	this.institucionesService.getHistorial(inst.id!).subscribe(response =>{
 		console.log('historial', response);
