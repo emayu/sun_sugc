@@ -44,8 +44,8 @@ export class GestionService{
         try{
             const newRegistro = await BitacoraRepository.create(data, transaction);
             await InstitucionRepository.update(institucion.id, institucionUpdate, transaction);
-            const updatedInstitucion = await InstitucionRepository.findById(institucion.id);
             await transaction.commit();
+            const updatedInstitucion = await InstitucionRepository.findById(institucion.id);
 
             return {
                 nextStep,
