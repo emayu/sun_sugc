@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs';
 import { AbstractService } from './abstract.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AuthService extends AbstractService {
 
   private readonly BASE_API_URL = "/api/v1"
 
-  constructor(private  http:HttpClient) {
+  constructor(private  http:HttpClient, private router:Router) {
     super();
    }
 
@@ -19,7 +20,7 @@ export class AuthService extends AbstractService {
     return this.http.post<any>(`${this.BASE_API_URL}/login`, credentials)
       .pipe(
         tap(response => {
-          console.log('login result:', response);
+          // console.log('login result:', response);
           if (response?.status && response.status  === "success") {
             const { token, usuario } = response.data;
             localStorage.setItem('token', token);
@@ -33,6 +34,7 @@ export class AuthService extends AbstractService {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn(){
@@ -45,6 +47,10 @@ export class AuthService extends AbstractService {
 
   getSessionToken(){
     return localStorage.getItem('token');
+  }
+
+  getUserName(){
+    return localStorage.getItem('usuario');
   }
 
 

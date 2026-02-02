@@ -1,18 +1,38 @@
 @if (authService.isLoggedIn()) {
-<header class="main">
-  <div class="content">
-    <div class="left-side">
-
-      <h1>{{ title }} 💻</h1>
-      <h4>{{project_name}}</h4>
-
+<header >
+  <mat-toolbar>
+    <!-- <button mat-icon-button (click)="menuSidenav.toggle()" >
+      <mat-icon>menu</mat-icon>
+    </button> -->
+    <span>💻 {{project_name}} {{ title }}</span>
+    <span class="spacer"></span>
+    <div class="user-info">
+      <span class="user-name">{{authService.getUserName()}}</span>
+      <button mat-icon-button [matMenuTriggerFor]="userMenu"><mat-icon>account_circle</mat-icon></button>
     </div>
-    <div class="divider" role="separator" aria-label="Divider"></div>
-    <div class="right-side">
-    </div>
-  </div>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="authService.logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Cerrar Sesión</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
 </header>
 }
 <main>
-  <router-outlet />
+  <mat-sidenav-container class="main-container">
+    <mat-sidenav mode="side" #menuSidenav >
+      <mat-nav-list>
+        <a mat-list-item routerLink="/instituciones" routerLinkActive="active-link" >
+          <mat-icon matListItemIcon>dashboard</mat-icon>
+          <span matListItemTitle>Mis Instituciones</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content-wrapper">
+        <router-outlet />
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </main>
