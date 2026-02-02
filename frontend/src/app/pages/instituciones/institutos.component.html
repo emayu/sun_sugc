@@ -42,22 +42,26 @@
                 <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.email_2" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
               </p>
             } 
-            <p><strong>Teléfono principal:</strong> {{ selectedInst.tel_1}} {{ selectedInst.estado_tel_1}} </p>
-            <p><strong>Teléfono alternat.:</strong> {{ selectedInst.tel_2}} {{ selectedInst.estado_tel_2}} </p>
+            <p><strong title="tel_1" >Teléfono principal:</strong> {{ selectedInst.tel_1}} {{ selectedInst.estado_tel_1}} </p>
+            <p><strong title="tel_2">Teléfono alternat.:</strong> {{ selectedInst.tel_2}} {{ selectedInst.estado_tel_2}} </p>
             @if (selectedInst.estado_tel_nuevo_1) {
-              <p><strong>Teléfono nuevo 1:</strong> {{ selectedInst.tel_nuevo_1}} {{ selectedInst.estado_tel_nuevo_1}} </p>
+              <p><strong title="tel_nuevo_1">Teléfono nuevo 1:</strong> {{ selectedInst.tel_nuevo_1}} {{ selectedInst.estado_tel_nuevo_1}} </p>
             }
             @if (selectedInst.estado_tel_nuevo_2) {
-              <p><strong>Teléfono nuevo 2:</strong> {{ selectedInst.tel_nuevo_2}} {{ selectedInst.estado_tel_nuevo_2}} </p>
+              <p><strong title="tel_nuevo_2">Teléfono nuevo 2:</strong> {{ selectedInst.tel_nuevo_2}} {{ selectedInst.estado_tel_nuevo_2}} </p>
             }
             @if (selectedInst.estado_tel_nuevo_3) {
-              <p><strong>Teléfono nuevo 3:</strong> {{ selectedInst.tel_nuevo_3}} {{ selectedInst.estado_tel_nuevo_3}} </p>
+              <p><strong title="tel_nuevo_3">Teléfono nuevo 3:</strong> {{ selectedInst.tel_nuevo_3}} {{ selectedInst.estado_tel_nuevo_3}} </p>
             }
           </div>
         </section>
 
         <mat-divider></mat-divider>
-
+        <div class="sidebar-action">
+        <button mat-raised-button color="primary" class="full-width" (click)="abrirGestion(selectedInst)">
+          REGISTRAR NUEVA ACCIÓN
+        </button>
+      </div>
         <section class="timeline-section">
           <h4>Bitácora de Gestiones</h4>
           <div class="timeline">
@@ -77,11 +81,7 @@
         </section>
       </div>
 
-      <div class="sidebar-footer">
-        <button mat-raised-button color="primary" class="full-width" (click)="abrirGestion(selectedInst)">
-          REGISTRAR NUEVA ACCIÓN
-        </button>
-      </div>
+      
       }
     </mat-sidenav>
     <mat-sidenav-content>

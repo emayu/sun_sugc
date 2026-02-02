@@ -47,7 +47,7 @@ CREATE TABLE instituciones (
     -- Estados y Control
     id_estado_institucion INTEGER REFERENCES cat_estados_institucion(id),
     id_responsable INTEGER REFERENCES usuarios(id),
-    ultima_gestion_at TIMESTAMP,
+    ultima_gestion_at TIMESTAMP WITH TIME ZONE,
     estado_mineduc VARCHAR(50),
 
     -- Contactos Originales

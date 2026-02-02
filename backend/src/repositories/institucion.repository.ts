@@ -14,9 +14,9 @@ export class InstitucionRepository{
         return await Institucion.findOne({ where: {id}, include: ['estado'] });
     }
 
-    static update(data:InstitucionModel, transaction?:Transaction){
+    static update(id:number, data: Partial<InstitucionModel>, transaction?:Transaction){
         return Institucion.update(data, { 
-            where: { id: data.id },
+            where: { id },
             transaction });
     }
 }

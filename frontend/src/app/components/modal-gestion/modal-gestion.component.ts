@@ -107,7 +107,6 @@ export class ModalGestionComponent implements OnInit {
 
   getTiposResultados(): ResultadoBitacoraDto[]{
     const value = this.gestionForm.get('accion')?.value;
-    console.log(this.gestionForm);
     if(value === "LLAMADA" || value === "WhatsApp"){
       return this.resultadosGestion.filter( resultado => resultado.tipo === "LLAMADA");
     }else if(value === "INVESTIGACION"){
@@ -123,13 +122,15 @@ export class ModalGestionComponent implements OnInit {
       ...this.gestionForm.value,
       id_institucion: this.data.institucion.id,
       fecha_gestion_inicio: this.data.fechaInicio,
-      fecha_gestion_final: new Date()
     };
 
-    // this.gestionService.registrar(payload).subscribe({
-    //   next: () => this.dialogRef.close(true),
-    //   error: (err) => console.error('Error al guardar gestión', err)
-    // });
+    this.institucionService.createGestionBitacora(payload).subscribe({
+      next: result => {
+        console.log('result service', result);
+        this.dialogRef.close(result);
+      },
+      error: (err) => console.error('Error al guardar gestión', err)
+    });
   }
 
 

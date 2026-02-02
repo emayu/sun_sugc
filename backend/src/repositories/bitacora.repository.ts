@@ -24,7 +24,8 @@ export class BitacoraRepository {
                     as: 'usuario',
                     attributes: ['nombre']
                 }
-            ]
+            ],
+            order: [ ["id", "desc"]]
         });
     }
 }

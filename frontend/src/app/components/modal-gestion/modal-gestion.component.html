@@ -17,7 +17,7 @@
       <mat-radio-group formControlName="medio_contacto">
         @for (t of telefonosDisponibles; track t.numero) {
           <div class="phone-row">
-            <mat-radio-button [value]="t.numero">
+            <mat-radio-button [value]="t.campo" [title]="t.campo">
               {{ t.label }}: {{ t.numero }}
             </mat-radio-button>
             @if(gestionForm.get('accion')?.value === 'LLAMADA'){

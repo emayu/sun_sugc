@@ -48,21 +48,22 @@ export class InstitutosComponent implements OnInit {
   private dialog = inject(MatDialog);
 
   ngOnInit(): void {
-	console.log('init');
-	this.isLoading = true;
-    this.institucionesService.getAll().subscribe({
-		next:(response) =>{
-			console.log(response);
-			this.dataSource.data = response;
-		},
-		error: (err) => {
-			console.error(err);
-			this.snackBar.open('Error: ' + err, 'x', { duration: 3000 });
-		}
-	}).add(() => { 
+	this.cargarInstituciones();
+  }
+
+	cargarInstituciones() {
+		this.isLoading = true;
+		this.institucionesService.getAll().subscribe({
+			next: (response) => {
+				this.dataSource.data = response;
+			},
+			error: (err) => {
+				this.snackBar.open('Error: ' + err, 'x', { duration: 3000 });
+			}
+		}).add(() => {
 			this.isLoading = false;
 		});
-  }
+	}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -82,16 +83,28 @@ export class InstitutosComponent implements OnInit {
 		},
 		disableClose: true,
 		// hasBackdrop: false
+	});
+
+	dialogRef.afterClosed().subscribe( success => {
+		// console.log('afterClosed', success);
+		if(success){			
+			const {institucion:updatedInstitucion} = success;
+			const index = this.dataSource.data.findIndex( i => i.id === this.selectedInst?.id);
+			if(index !== -1){
+				this.dataSource.data[index] = updatedInstitucion;
+				this.dataSource.data = [...this.dataSource.data];
+			}
+			this.verDetalle(updatedInstitucion, null);
+		}
 	})
-    console.log('Abriendo gestión para:', inst.id);
+    
   }
 
   verDetalle(inst:InstitucionDto, sidenav:any){
 	this.selectedInst = inst;
+	this.historial = []; //limpiar historial antes de abrir el panel
     sidenav?.open();
-
 	this.institucionesService.getHistorial(inst.id!).subscribe(response =>{
-		console.log('historial', response);
 		this.historial = response;
 	})
   }

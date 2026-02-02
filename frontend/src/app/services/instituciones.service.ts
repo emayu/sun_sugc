@@ -30,6 +30,14 @@ export class InstitucionesService extends AbstractService{
         catchError(this.handleError)
       );
   }
+
+  createGestionBitacora(data:BitacoraDto){
+    return this.http.post(`${this.BASE_API_URL}/${data.id_institucion}/gestiones`, data)
+      .pipe(
+        map((response: any) => response.data),
+        catchError(this.handleError)
+      );
+  }
 }
 
 

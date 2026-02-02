@@ -1,6 +1,7 @@
 import { sequelize } from "../config/database";
 import { ResultadoGestion } from "../models";
 import { BitacoraCreationModel } from "../models/bitacora.model";
+import { InstitucionModel } from "../models/institucion.model";
 import { BitacoraRepository } from "../repositories/bitacora.repository";
 import { InstitucionRepository } from "../repositories/institucion.repository";
 import { RestultadoGestionRepository } from "../repositories/resultadoGestion.respository";
@@ -30,23 +31,26 @@ export class GestionService{
             nextStep = "Enviar invitación";
         }
 
+        const institucionUpdate:Partial<InstitucionModel> = { };
         if(institucion.id_estado_institucion === 1 ){  //PENDIENTE
-            institucion.id_estado_institucion = 2; // EN PROCESO
+            institucionUpdate.id_estado_institucion = 2; // EN PROCESO
         }
 
         
         const now = new Date();
         data.fecha_gestion_final = now;
-        institucion.ultima_gestion_at = now;
+        institucionUpdate.ultima_gestion_at = now;
         const transaction = await sequelize.transaction();
         try{
             const newRegistro = await BitacoraRepository.create(data, transaction);
-            await InstitucionRepository.update(institucion, transaction);
+            await InstitucionRepository.update(institucion.id, institucionUpdate, transaction);
+            const updatedInstitucion = await InstitucionRepository.findById(institucion.id);
             await transaction.commit();
 
             return {
                 nextStep,
-                gestion: newRegistro
+                gestion: newRegistro,
+                institucion: updatedInstitucion,
             }
         }catch(error){
             await transaction.rollback();
