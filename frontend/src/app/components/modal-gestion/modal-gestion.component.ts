@@ -108,8 +108,8 @@ export class ModalGestionComponent implements OnInit {
 
   prepararTelefonos() {
     const inst = this.data.institucion as InstitucionDto;
-    if (inst.tel_1) this.telefonosDisponibles.push({ label: 'Teléfono 1', numero: inst.tel_1, campo: 'tel_1' });
-    if (inst.tel_2) this.telefonosDisponibles.push({ label: 'Teléfono 2', numero: inst.tel_2, campo: 'tel_2' });
+    if (inst.tel_1) this.telefonosDisponibles.push({ label: 'Teléfono principal', numero: inst.tel_1, campo: 'tel_1' });
+    if (inst.tel_2) this.telefonosDisponibles.push({ label: 'Teléfono alternativo', numero: inst.tel_2, campo: 'tel_2' });
     if (inst.tel_nuevo_1) this.telefonosDisponibles.push({ label: 'Tel Nuevo 1', numero: inst.tel_nuevo_1, campo: 'tel_nuevo_1' });
     if (inst.tel_nuevo_2) this.telefonosDisponibles.push({ label: 'Tel Nuevo 2', numero: inst.tel_nuevo_2, campo: 'tel_nuevo_2' });
     if (inst.tel_nuevo_3) this.telefonosDisponibles.push({ label: 'Tel Nuevo 3', numero: inst.tel_nuevo_3, campo: 'tel_nuevo_3' });
