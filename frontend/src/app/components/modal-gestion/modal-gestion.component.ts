@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +10,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { InstitucionesService, ResultadoBitacoraDto } from '../../services/instituciones.service';
 import { InstitucionDto } from '../../pages/instituciones/institutos.component';
@@ -23,8 +25,10 @@ import { ResultadoGestionService } from '../../services/resultado-gestion.servic
     CommonModule, ReactiveFormsModule, MatDialogModule,
     MatButtonModule, MatFormFieldModule, MatInputModule,
     MatSelectModule, MatDividerModule, MatListModule,
-    MatIconModule, MatRadioModule
+    MatIconModule, MatRadioModule, MatDatepickerModule,
+    FormsModule,
   ],
+  providers: [ provideNativeDateAdapter()],
   templateUrl: './modal-gestion.component.html',
   styleUrl: './modal-gestion.component.scss'
 })
@@ -63,7 +67,9 @@ export class ModalGestionComponent implements OnInit {
       medio_contacto: [''],
       observaciones: [''],
       nuevo_telefono: [''], // Solo se llena si la acción es Investigación
-      id_nuevo_estado_inst: [this.data.institucion.id_estado_institucion, Validators.required]
+      id_nuevo_estado_inst: [this.data.institucion.id_estado_institucion, Validators.required],
+      fecha: [''],
+      hora: ['00:00']
     });
 
     this.gestionForm.get('accion')?.valueChanges.subscribe( accionValue => {
@@ -75,19 +81,28 @@ export class ModalGestionComponent implements OnInit {
         nuevoMedioContacto?.patchValue('');
       }
       nuevoMedioContacto?.updateValueAndValidity();
+      const resultadoControl = this.gestionForm.get('id_resultado');
+      resultadoControl?.patchValue('');//resetear valor al cambiar
     });
 
     this.gestionForm.get('id_resultado')?.valueChanges.subscribe(idResultado => {
       const nuevoTelControl = this.gestionForm.get('nuevo_telefono');
-
       if (idResultado === 8) { // ID 8 = 'Dato Encontrado'
         nuevoTelControl?.setValidators([Validators.required, Validators.pattern(/^[0-9]{8}$/)]);
       } else {
         nuevoTelControl?.clearValidators();
         nuevoTelControl?.patchValue('');
       }
-
       nuevoTelControl?.updateValueAndValidity();
+
+      const nuevoFechaControl = this.gestionForm.get('fecha');
+      if(idResultado === 6){ // ID 6 == 'Pidio rellamar despues'
+        nuevoFechaControl?.setValidators([Validators.required])
+      }else{
+        nuevoFechaControl?.clearValidators();
+        nuevoFechaControl?.patchValue('');
+      }
+      nuevoFechaControl?.updateValueAndValidity();
     })
   }
 
@@ -118,10 +133,22 @@ export class ModalGestionComponent implements OnInit {
   guardar() {
     if (this.gestionForm.invalid) return;
 
+    const fecha = this.gestionForm.get('fecha')?.value;
+    const hora = this.gestionForm.get('hora')?.value;
+    let proximaLlamada = null;
+    if(fecha){
+      proximaLlamada = new Date(fecha);
+      if(hora){
+        const [hours, minutes] = hora.split(':');
+        proximaLlamada.setHours(+hours, +minutes);
+      }
+    }
+
     const payload = {
       ...this.gestionForm.value,
       id_institucion: this.data.institucion.id,
       fecha_gestion_inicio: this.data.fechaInicio,
+      proxima_llamada: proximaLlamada
     };
 
     this.institucionService.createGestionBitacora(payload).subscribe({

@@ -48,6 +48,22 @@
     </mat-form-field>
   }
 
+  @if(gestionForm.get('id_resultado')?.value === 6){
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Próxima llamada (Fecha)</mat-label>
+      <input matInput [matDatepicker]="picker" [min]="fechaInicio" formControlName="fecha">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Hora</mat-label>
+      <input matInput type="time" formControlName="hora">
+      <mat-icon matIconSuffix>access_time</mat-icon>
+    </mat-form-field>
+  </div>
+  }
+
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Observaciones</mat-label>
     <textarea matInput formControlName="observaciones" rows="3"></textarea>
