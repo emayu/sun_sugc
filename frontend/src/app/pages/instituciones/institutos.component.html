@@ -64,37 +64,44 @@
       </div>
         <section class="timeline-section">
           <h4>Bitácora de Gestiones</h4>
-          <div class="timeline">
-            @for (h of historial; track h.id) {
-            <div class="timeline-item">
-              <div class="timeline-marker"></div>
-              <div class="timeline-content">
-                <span class="date">{{ h.fecha_gestion_final | date:'short' }}</span>
-                <p class="action">
-                  <strong>
-                    {{ h.accion }} 
-                    @switch (h.medio_contacto) {
-                      @case ("tel_1") { - Teléfono principal } 
-                      @case ("tel_2") { - Teléfono alternativo } 
-                      @case ("tel_nuevo_1") { - Teléfono nuevo 1 } 
-                      @case ("tel_nuevo_2") { - Teléfono nuevo 2 } 
-                      @case ("tel_nuevo_3") { - Teléfono nuevo 3 } 
-                      @default { {{h.medio_contacto}} }
-                    } 
-                    :
-                  </strong> 
-                  {{ h.resultado.nombre }} 
-                  @if(h.id_resultado === 6){
-                    {{  (h.proxima_llamada| date:'short') }} 
-                  }
-                </p>
-                <p class="notes">{{ h.observaciones }}</p> 
-              </div>
+          @if(isLoadingHistorial){
+            <div class="spinner-container">
+              <mat-spinner></mat-spinner> Cargando registros
             </div>
-            } @empty {
-            <p class="empty-msg">No hay gestiones registradas aún.</p>
-            }
-          </div>
+          } @else {  
+            <div class="timeline">
+              @for (h of historial; track h.id) {
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <span class="date">{{ h.fecha_gestion_final | date:'short' }}</span>
+                  <p class="action">
+                    <strong>
+                      {{ h.accion }} 
+                      @switch (h.medio_contacto) {
+                        @case ("tel_1") { - Teléfono principal } 
+                        @case ("tel_2") { - Teléfono alternativo } 
+                        @case ("tel_nuevo_1") { - Teléfono nuevo 1 } 
+                        @case ("tel_nuevo_2") { - Teléfono nuevo 2 } 
+                        @case ("tel_nuevo_3") { - Teléfono nuevo 3 } 
+                        @default { {{h.medio_contacto}} }
+                      } 
+                      :
+                    </strong> 
+                    {{ h.resultado.nombre }} 
+                    @if(h.id_resultado === 6){
+                      {{  (h.proxima_llamada| date:'short') }} 
+                    }
+                  </p>
+                  <p class="notes">{{ h.observaciones }}</p> 
+                </div>
+              </div>
+              } @empty {
+              <p class="empty-msg">No hay gestiones registradas aún.</p>
+              }
+              
+            </div>
+          }
         </section>
       </div>
 

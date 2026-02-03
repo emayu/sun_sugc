@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { InstitucionesService, ResultadoBitacoraDto } from '../../services/instituciones.service';
 import { InstitucionDto } from '../../pages/instituciones/institutos.component';
@@ -26,7 +27,7 @@ import { ResultadoGestionService } from '../../services/resultado-gestion.servic
     MatButtonModule, MatFormFieldModule, MatInputModule,
     MatSelectModule, MatDividerModule, MatListModule,
     MatIconModule, MatRadioModule, MatDatepickerModule,
-    FormsModule,
+    FormsModule, MatProgressSpinnerModule
   ],
   providers: [ provideNativeDateAdapter()],
   templateUrl: './modal-gestion.component.html',
@@ -43,6 +44,7 @@ export class ModalGestionComponent implements OnInit {
   private resultadosGestion:ResultadoBitacoraDto[] = [];
 
   fechaInicio:Date;
+  isSaving = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data:any,
@@ -150,14 +152,14 @@ export class ModalGestionComponent implements OnInit {
       fecha_gestion_inicio: this.data.fechaInicio,
       proxima_llamada: proximaLlamada
     };
-
+    this.isSaving = true;
     this.institucionService.createGestionBitacora(payload).subscribe({
       next: result => {
         console.log('result service', result);
         this.dialogRef.close(result);
       },
       error: (err) => console.error('Error al guardar gestión', err)
-    });
+    }).add(()=>this.isSaving = false );
   }
 
 

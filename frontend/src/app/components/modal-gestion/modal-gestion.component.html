@@ -74,10 +74,13 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>CANCELAR</button>
+  <button mat-button mat-dialog-close [disabled]="isSaving" >CANCELAR</button>
   <button mat-raised-button color="primary" 
-          [disabled]="gestionForm.invalid" 
+          [disabled]="gestionForm.invalid || isSaving" 
           (click)="guardar()">
     GUARDAR GESTIÓN
+    @if(isSaving){
+      <mat-icon><mat-spinner diameter="20" ></mat-spinner></mat-icon>
+    }
   </button>
 </mat-dialog-actions>

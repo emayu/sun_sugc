@@ -42,6 +42,7 @@ export class InstitutosComponent implements OnInit {
   isLoading = false;
   selectedInst:InstitucionDto | null = null;
   historial: BitacoraDto[] = [];
+  isLoadingHistorial = false;
 
   institucionesService = inject(InstitucionesService);
   private snackBar = inject(MatSnackBar);
@@ -103,10 +104,11 @@ export class InstitutosComponent implements OnInit {
   verDetalle(inst:InstitucionDto, sidenav:any){
 	this.selectedInst = inst;
 	this.historial = []; //limpiar historial antes de abrir el panel
+	this.isLoadingHistorial = true;
     sidenav?.open();
 	this.institucionesService.getHistorial(inst.id!).subscribe(response =>{
 		this.historial = response;
-	})
+	}).add( ()=> this.isLoadingHistorial = false );
   }
 
   limpiarSeleccion(){
