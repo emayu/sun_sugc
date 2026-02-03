@@ -25,7 +25,7 @@ export class BitacoraRepository {
                     attributes: ['nombre']
                 }
             ],
-            order: [ ["id", "desc"]]
+            order: [ ["fecha_gestion_final", "desc"]]
         });
     }
 }
