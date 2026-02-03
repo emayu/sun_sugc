@@ -20,7 +20,7 @@ SELECT
     'ENVÍO EMAIL',     -- Acción realizada
     'EMAIL',                    -- Medio
     10,                         -- El ID nuevo envio de sistema
-    'Contacto inicial: Envío de correo invitación (Envío Masivo).'
+    'Contacto inicial: Envío de correo invitación (Envío Masivo desde <infousac@adm.usac.edu.gt>).'
 FROM instituciones i
 where i.id_estado_institucion = 7;
 
@@ -43,6 +43,6 @@ SELECT
     'ENVÍO EMAIL',     -- Acción realizada
     'EMAIL',                    -- Medio
     10,                         -- El ID nuevo envio de sistema
-    'Contacto inicial: Envío de correo invitación (Envío Masivo). Institución sin respuesta registrada; se debe dar seguimiento telefónico.'
+    'Contacto inicial: Envío de correo invitación (Envío Masivo desde <infousac@adm.usac.edu.gt>). Institución sin respuesta registrada; se debe dar seguimiento telefónico.'
 FROM instituciones i
 where i.id_estado_institucion != 7;
