@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../config/database";
+import { InstitucionEstado } from "./estadoInstitucion.model";
 
 export interface InstitucionModel {
     id: number;
@@ -17,7 +18,7 @@ export interface InstitucionModel {
 	supervisor : string;
 	director: string;
 	contacto_alterno : string;
-	id_estado_institucion: number;
+	id_estado_institucion: InstitucionEstado;
 	id_responsable: number;
 	ultima_gestion_at: Date;
 	estado_mineduc: string;
@@ -55,7 +56,7 @@ export class Institucion extends Model<InstitucionModel, InstitucionCreationMode
     supervisor!: string;
     director!: string;
     contacto_alterno!: string;
-    id_estado_institucion!: number;
+    id_estado_institucion!: InstitucionEstado;
     id_responsable!: number;
     ultima_gestion_at!: Date;
     estado_mineduc!: string;

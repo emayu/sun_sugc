@@ -1,7 +1,9 @@
 import { sequelize } from "../config/database";
 import { ResultadoGestion } from "../models";
 import { BitacoraCreationModel } from "../models/bitacora.model";
+import { ESTADO_INSTITUCION } from "../models/estadoInstitucion.model";
 import { InstitucionModel } from "../models/institucion.model";
+import { RESULTADO_GESTION } from "../models/resultadoGestion.model";
 import { BitacoraRepository } from "../repositories/bitacora.repository";
 import { InstitucionRepository } from "../repositories/institucion.repository";
 import { RestultadoGestionRepository } from "../repositories/resultadoGestion.respository";
@@ -19,21 +21,25 @@ export class GestionService{
     static async createGestion(data:BitacoraCreationModel){
 
         const institucion = await InstitucionRepository.findById(data.id_institucion);
-        const newResultado = await RestultadoGestionRepository.findById(data.id_resultado);
-
 
         if(institucion?.id_responsable !== data.id_usuario){
             throw Error("FORBIDDEN");
         }
+        
+        const institucionUpdate:Partial<InstitucionModel> = { };
+        let nextStep = "none";
 
-        let nextStep = "none"
-        if(newResultado?.nombre === "Contacto exitoso"){
+        if(data.id_resultado === RESULTADO_GESTION.CONTACTO_EXITOSO){
             nextStep = "Enviar invitación";
+            institucionUpdate.id_estado_institucion = ESTADO_INSTITUCION.PENDIENTE_ENVIAR_CORREO; //Pendiente envío correo
+            this.checkNumberOnSuccessContact(institucionUpdate, institucion, data);
         }
 
-        const institucionUpdate:Partial<InstitucionModel> = { };
-        if(institucion.id_estado_institucion === 1 ){  //PENDIENTE
-            institucionUpdate.id_estado_institucion = 2; // EN PROCESO
+        this.checkAddNewNumber(institucionUpdate, institucion, data);
+        
+        
+        if(!institucionUpdate.id_estado_institucion && institucion.id_estado_institucion === ESTADO_INSTITUCION.PENDIENTE ){  //PENDIENTE
+            institucionUpdate.id_estado_institucion = ESTADO_INSTITUCION.EN_PROCESO; // EN PROCESO
         }
 
         
@@ -57,4 +63,42 @@ export class GestionService{
             throw error;
         }        
     }
+
+    static checkAddNewNumber(institucionUpdate:Partial<InstitucionModel>, insitucionDbData:InstitucionModel, newRegister:any){
+        //chequea que se envie los datos correcto
+        if(newRegister.id_resultado !== RESULTADO_GESTION.DATO_ENCONTRADO || !newRegister.nuevo_telefono){
+            return;
+        }
+        //colocar en el primero libre
+        if(!insitucionDbData.tel_nuevo_1){
+            institucionUpdate.tel_nuevo_1 = newRegister.nuevo_telefono;
+            institucionUpdate.estado_tel_nuevo_1 = "Pendiente validar";
+            return;
+        }
+        if(!insitucionDbData.tel_nuevo_2){
+            institucionUpdate.tel_nuevo_2 = newRegister.nuevo_telefono;
+            institucionUpdate.estado_tel_nuevo_2 = "Pendiente validar";
+            return;
+        }
+        if(!insitucionDbData.tel_nuevo_3){
+            institucionUpdate.tel_nuevo_3 = newRegister.nuevo_telefono;
+            institucionUpdate.estado_tel_nuevo_3 = "Pendiente validar";
+            return;
+        }
+    }
+
+
+    static checkNumberOnSuccessContact(institucionUpdate:Partial<InstitucionModel>, insitucionDbData:InstitucionModel, newRegister:BitacoraCreationModel){
+        if(newRegister.medio_contacto === "tel_nuevo_1"){
+            institucionUpdate.estado_tel_nuevo_1 = "Activo";
+        }
+        if(newRegister.medio_contacto === "tel_nuevo_2"){
+            institucionUpdate.estado_tel_nuevo_2 = "Activo";
+        }
+        if(newRegister.medio_contacto === "tel_nuevo_3"){
+            institucionUpdate.estado_tel_nuevo_3 = "Activo";
+        }
+    }
+
+
 }

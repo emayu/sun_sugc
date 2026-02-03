@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../config/database";
+import { ResultadoGestionEstado } from "./resultadoGestion.model";
 
 export interface BitacoraModel {
     id: number;
@@ -9,7 +10,7 @@ export interface BitacoraModel {
     fecha_gestion_final: Date;
     accion: string, 
     medio_contacto: string;
-    id_resultado: number;
+    id_resultado: ResultadoGestionEstado;
     observaciones: string;
     proxima_llamada: Date;
 }
@@ -25,7 +26,7 @@ export class Bitacora extends Model<BitacoraModel, BitacoraCreationModel> implem
     fecha_gestion_final!: Date;
     accion!: string;
     medio_contacto!: string;
-    id_resultado!: number;
+    id_resultado!: ResultadoGestionEstado;
     observaciones!: string;
     proxima_llamada!: Date;
 }
