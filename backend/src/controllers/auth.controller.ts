@@ -18,8 +18,12 @@ export async function login(req: Request, res: Response, next:NextFunction) {
             message: 'Login exitoso',
             data: {token, usuario: usuario.nombre}
         });
-    } catch (error) {
-        next(error);
+    } catch (error:any) {
+        if(error.message == "Credenciales invalidas"){
+            return sendResponse(res, 401, {  status: 'fail', message: error.message});
+        }else{
+            return sendResponse(res, 500, {  status: 'fail', message: error.message ?? "Ocurrió un error inesperado" });
+        }   
     }
 
 }
