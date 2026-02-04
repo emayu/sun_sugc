@@ -17,7 +17,20 @@ const PORT = process.env.PORT || 4001;
 const ENV = process.env.ENV || "DEV"; 
  
 //Middlewares base 
-server.use(helmet()) ;
+server.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        scriptSrcAttr: ["'self'", "'unsafe-inline'"],  // Ajustes para Angular
+        styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"], // Ajustes para Angular
+        imgSrc: ["'self'", "data:"],
+        fontSrc: ["'self'", "fonts.gstatic.com", "data:"],
+      },
+    },
+  })
+);
 server.use(express.json());
 
 //Configuración LOGs
@@ -29,9 +42,6 @@ if( ENV === "PROD"){
 
 server.use("/api/v1", apiRoutes);
  
-server.get('/', (req, res)=> { 
-    res.send('Hello SUGC');   
-}); 
  
 //monitoring and health  
 //aunque en la prueba no se pide esto es una buena practica para DevOps  
@@ -41,13 +51,24 @@ server.get('/version', (req, res) => {
      }});
 }); 
 
-server.get('/healthz', (req, res) => sendResponse(res, 200, { status: "success", message:"Server is healthy"})); 
+server.get('/healthz', (req, res) => sendResponse(res, 200, { status: "success", message:"Server is healthy"}));
+
+//configuración para prod
+if( ENV === "PROD"){
+    const path = require('path');
+    const publicPath = path.join(__dirname, 'public');
+    server.use(express.static(publicPath));
+    server.get('/*path', (req, res) => {
+        res.sendFile(path.join(publicPath, 'index.html'));
+    });
+
+}
  
 async function startSever() {
     try {
         await sequelize.authenticate();
         server.listen(PORT, () => {
-            console.log(`Hello SUGC from NodeJS + Typescript. Server started on ${PORT}`);
+            console.log(`Hello SUGC from NodeJS + Typescript. Server[${ENV}] started on ${PORT}`);
         })
     }catch(error){
         console.error('No se pudo conectar con la DB', error);
