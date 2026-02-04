@@ -6,7 +6,7 @@ export class InstitucionController {
     static async getInsitucionesByResponsable(req: Request, response: Response) {
         try {
             // console.log(req.user);
-            const idUsuario = req.user.subId;
+            const idUsuario = req.user?.subId!;
 
             const instituciones = await InstitucionService.getInsitucionesByResponsable(idUsuario);
             return sendResponse(response, 200, {

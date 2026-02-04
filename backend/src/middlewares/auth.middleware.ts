@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { sendResponse } from '../utils/sendResponse';
 import { verifyToken } from '../security/security';
+import { UserSession } from '../types/express';
 
 export function requireLogin(req: Request, res: Response, next: NextFunction) {
     const auth = req.headers.authorization || '';
@@ -14,7 +15,7 @@ export function requireLogin(req: Request, res: Response, next: NextFunction) {
 
     try {
         const decoded = verifyToken(token);
-        req.user = decoded;
+        req.user = decoded as UserSession;
 
         // 4. Continuar al siguiente paso (Controlador)
         next();
