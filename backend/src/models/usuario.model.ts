@@ -10,7 +10,9 @@ export interface UsuarioModel {
 }
 
 
-export interface UsuarioCreationModel extends Optional<UsuarioModel, 'id'> {}
+export interface UsuarioCreationModel extends Optional<UsuarioModel, 'id'> {
+    contrasena:string;
+}
 
 export class Usuario extends Model<UsuarioModel, UsuarioCreationModel> implements UsuarioModel{
     id!: number;
