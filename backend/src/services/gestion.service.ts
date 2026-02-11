@@ -31,7 +31,7 @@ export class GestionService{
 
         if(data.id_resultado === RESULTADO_GESTION.CONTACTO_EXITOSO){
             nextStep = "Enviar invitación";
-            institucionUpdate.id_estado_institucion = ESTADO_INSTITUCION.PENDIENTE_ENVIAR_CORREO; //Pendiente envío correo
+            institucionUpdate.id_estado_institucion = ESTADO_INSTITUCION.CONTACTADO; //Pendiente envío correo
             this.checkNumberOnSuccessContact(institucionUpdate, institucion, data);
         }
 

@@ -106,4 +106,5 @@ INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(5, '05-Inve
 INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(6, '06-Invitación Enviada', 'Ya se envió la invitación');
 INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(7, '07-Confirmado', NULL);
 INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(8, '08-Declinado', NULL);
-INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(9, '06-Pendiente enviar correo', 'Instituto contactado falta enviar invitación');
+INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(9, '06-Contactado', 'Instituto contactado');
+

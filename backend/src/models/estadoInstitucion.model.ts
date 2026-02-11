@@ -38,7 +38,7 @@ export const ESTADO_INSTITUCION = {
     INVITACION_ENVIADA: 6,
     CONFIRMADO: 7,
     DECLINADO: 8,
-    PENDIENTE_ENVIAR_CORREO: 9,
+    CONTACTADO: 9,
 }
 
 export type InstitucionEstado = typeof ESTADO_INSTITUCION[keyof typeof ESTADO_INSTITUCION];
