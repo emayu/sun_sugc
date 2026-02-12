@@ -38,7 +38,7 @@ import { ModalGestionComponent } from '../../components/modal-gestion/modal-gest
 export class InstitutosComponent implements OnInit {
 
   dataSource = new MatTableDataSource<InstitucionDto>([]);
-  displayedColumns: string[] = ['id', 'nombre', 'estado', 'ultima_gestion', 'acciones'];
+  displayedColumns: string[] = ['id', 'nombre', 'estado', 'confirmados', 'ultima_gestion', 'acciones'];
   isLoading = false;
   selectedInst:InstitucionDto | null = null;
   historial: BitacoraDto[] = [];
