@@ -42,16 +42,16 @@
                 <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.email_2" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
               </p>
             } 
-            <p><strong title="tel_1" >Teléfono principal:</strong> {{ selectedInst.tel_1}} {{ selectedInst.estado_tel_1}} </p>
-            <p><strong title="tel_2">Teléfono alternat.:</strong> {{ selectedInst.tel_2}} {{ selectedInst.estado_tel_2}} </p>
+            <p><strong title="tel_1" >Teléfono principal:</strong>  {{ selectedInst.estado_tel_1}} </p>
+            <p><strong title="tel_2">Teléfono alternat.:</strong>  {{ selectedInst.estado_tel_2}} </p>
             @if (selectedInst.estado_tel_nuevo_1) {
-              <p><strong title="tel_nuevo_1">Teléfono nuevo 1:</strong> {{ selectedInst.tel_nuevo_1}} {{ selectedInst.estado_tel_nuevo_1}} </p>
+              <p><strong title="tel_nuevo_1">Teléfono nuevo 1:</strong>  {{ selectedInst.estado_tel_nuevo_1}} </p>
             }
             @if (selectedInst.estado_tel_nuevo_2) {
-              <p><strong title="tel_nuevo_2">Teléfono nuevo 2:</strong> {{ selectedInst.tel_nuevo_2}} {{ selectedInst.estado_tel_nuevo_2}} </p>
+              <p><strong title="tel_nuevo_2">Teléfono nuevo 2:</strong>  {{ selectedInst.estado_tel_nuevo_2}} </p>
             }
             @if (selectedInst.estado_tel_nuevo_3) {
-              <p><strong title="tel_nuevo_3">Teléfono nuevo 3:</strong> {{ selectedInst.tel_nuevo_3}} {{ selectedInst.estado_tel_nuevo_3}} </p>
+              <p><strong title="tel_nuevo_3">Teléfono nuevo 3:</strong> {{ selectedInst.estado_tel_nuevo_3}} </p>
             }
           </div>
         </section>
@@ -136,7 +136,7 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="telefonos">
+          <!-- <ng-container matColumnDef="telefonos">
             <th mat-header-cell *matHeaderCellDef> Teléfonos </th>
             <td mat-cell *matCellDef="let element">
               <div class="phone-info">
@@ -164,7 +164,7 @@
               </div>
               }
             </td>
-          </ng-container>
+          </ng-container> -->
 
           <ng-container matColumnDef="ultima_gestion">
             <th mat-header-cell *matHeaderCellDef> Última Gestión </th>
