@@ -40,9 +40,20 @@ export class AuthService extends AbstractService {
   isLoggedIn(){
     const token = this.getSessionToken();
     if(token){
-      return true;
+      const { exp } = this.getDecodedJWTPayload();
+      return exp > (Math.floor( (new Date).getTime() / 1000));
     }
     return false;
+  }
+
+  private getDecodedJWTPayload(){
+    const token = this.getSessionToken();
+    if(token){
+      try{
+        return JSON.parse(atob(token.split('.')[1]));
+      }catch(error){ console.warn('token inválido', token)}
+    }
+    return {};
   }
 
   getSessionToken(){
