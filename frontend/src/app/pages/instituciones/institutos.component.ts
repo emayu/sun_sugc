@@ -43,6 +43,7 @@ export class InstitutosComponent implements OnInit {
   selectedInst:InstitucionDto | null = null;
   historial: BitacoraDto[] = [];
   isLoadingHistorial = false;
+  isReloadingInstitutoData = false;
 
   institucionesService = inject(InstitucionesService);
   private snackBar = inject(MatSnackBar);
@@ -104,11 +105,24 @@ export class InstitutosComponent implements OnInit {
   verDetalle(inst:InstitucionDto, sidenav:any){
 	this.selectedInst = inst;
 	this.historial = []; //limpiar historial antes de abrir el panel
-	this.isLoadingHistorial = true;
+		
     sidenav?.open();
+	this.isReloadingInstitutoData = true;
+	this.institucionesService.getById(inst.id!).subscribe( institutoFetchedData =>{
+		if(institutoFetchedData.id_estado_institucion !== inst.id_estado_institucion){
+			//update local data
+			inst.id_estado_institucion = institutoFetchedData.id_estado_institucion;
+			inst.estado = {...institutoFetchedData.estado};
+			inst.cantidad_graduandos = institutoFetchedData.cantidad_graduandos;
+			inst.ultima_gestion_at = institutoFetchedData.ultima_gestion_at;
+		}
+	}).add( () => this.isReloadingInstitutoData = false );
+
+	this.isLoadingHistorial = true;
 	this.institucionesService.getHistorial(inst.id!).subscribe(response =>{
 		this.historial = response;
 	}).add( ()=> this.isLoadingHistorial = false );
+	
   }
 
   limpiarSeleccion(){

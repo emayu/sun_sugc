@@ -58,7 +58,10 @@
 
         <mat-divider></mat-divider>
         <div class="sidebar-action">
-        <button mat-raised-button color="primary" class="full-width" (click)="abrirGestion(selectedInst)">
+        <button mat-raised-button color="primary" class="full-width" 
+          (click)="abrirGestion(selectedInst)"
+          [disabled]="selectedInst.estado?.nombre === '07-Confirmado' || isReloadingInstitutoData">
+          
           REGISTRAR NUEVA ACCIÓN
         </button>
       </div>

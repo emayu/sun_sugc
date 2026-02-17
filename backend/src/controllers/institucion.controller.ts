@@ -18,9 +18,28 @@ export class InstitucionController {
             console.error("error", error);
             return sendResponse(response, 500, {
                 status: "error",
-                message: "Ocurrio un error"
+                message: "Ocurrió un error"
             });
             
+        }
+
+    }
+
+    static async getInstitucionById(req: Request, res: Response) {
+        try {
+            const { id: idInstitucion } = req.params;
+            const historial = await InstitucionService.getInstitucionById(Number(idInstitucion));
+            return sendResponse(res, 200, {
+                status: "success",
+                message: "Historial obtenido",
+                data: historial
+            })
+        } catch (error: any) {
+            console.error("error", error);
+            return sendResponse(res, 500, {
+                status: "error",
+                message: "Ocurrió un error"
+            });
         }
 
     }

@@ -7,6 +7,7 @@ import { GestionController } from '../controllers/gestion.controller';
 const router = Router();
 router.use(requireLogin)
 router.get('/', InstitucionController.getInsitucionesByResponsable);
+router.get('/:id', InstitucionController.getInstitucionById);
 router.get('/:id/gestiones', GestionController.getHistorialPorInstitucion);
 router.post('/:id_institucion/gestiones', GestionController.createGestion);
 

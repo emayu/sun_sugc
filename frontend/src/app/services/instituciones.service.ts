@@ -14,6 +14,14 @@ export class InstitucionesService extends AbstractService{
     super();
    }
 
+   getById(id:number): Observable<any>{
+    return this.http.get(`${this.BASE_API_URL}/${id}`)
+      .pipe( 
+        map( (response:any) => response.data),
+        catchError(this.handleError)
+      );
+   }
+
 
    getAll():Observable<any>{
     return this.http.get(this.BASE_API_URL)
