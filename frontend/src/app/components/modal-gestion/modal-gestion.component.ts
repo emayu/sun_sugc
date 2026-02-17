@@ -162,5 +162,15 @@ export class ModalGestionComponent implements OnInit {
     }).add(()=>this.isSaving = false );
   }
 
+  onCancelar(){
+    if(this.gestionForm.dirty ){
+      const confirmar = confirm("GESTIÓN EN CURSO.\n\nTiene cambios sin guardar, ha seleccionado una acción o modificado datos. ¿Desea SEGUIR EDITANDO?\n\n(Cancelar para salir y descartar los cambios)");
+      if(!confirmar){
+        this.dialogRef.close();
+      }
+    }else{
+      this.dialogRef.close();
+    }
+  }
 
 }
