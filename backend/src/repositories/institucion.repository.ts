@@ -6,7 +6,8 @@ export class InstitucionRepository{
     static async findByResponsable(idResponsable:number):Promise<InstitucionModel[]> {
         return Institucion.findAll({ 
             where: { id_responsable: idResponsable},
-            include: ['estado']
+            include: ['estado'],
+            order: ['id']
         });
     }
 
