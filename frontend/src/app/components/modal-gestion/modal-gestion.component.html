@@ -17,11 +17,13 @@
       <mat-radio-group formControlName="medio_contacto">
         @for (t of telefonosDisponibles; track t.numero) {
           <div class="phone-row">
-            <mat-radio-button [value]="t.campo" [title]="t.campo">
+            <mat-radio-button #radioButton [value]="t.campo" [title]="t.campo">
               {{ t.label }}: {{ t.numero }}
             </mat-radio-button>
             @if(gestionForm.get('accion')?.value === 'LLAMADA'){
-            <button mat-icon-button color="primary" (click)="ejecutarLlamada(t.numero)" type="button">
+            <button mat-icon-button color="primary" (click)="ejecutarLlamada(t.numero, t.campo)" type="button"
+            title="Llamar a {{t.label}}"
+            >
               <mat-icon>phone_forwarded</mat-icon>
             </button>
             }

@@ -117,8 +117,8 @@ export class ModalGestionComponent implements OnInit {
     if (inst.tel_nuevo_3) this.telefonosDisponibles.push({ label: 'Tel Nuevo 3', numero: inst.tel_nuevo_3, campo: 'tel_nuevo_3' });
   }
 
-  ejecutarLlamada(tel:string){
-    this.gestionForm.patchValue({medio_contacto: tel});
+  ejecutarLlamada(tel:string, campo:string){
+    this.gestionForm.patchValue({medio_contacto: campo});
     window.location.href = `tel:${tel}`;
   }
 
