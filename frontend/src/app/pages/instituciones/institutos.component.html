@@ -60,7 +60,8 @@
         <div class="sidebar-action">
         <button mat-raised-button color="primary" class="full-width" 
           (click)="abrirGestion(selectedInst)"
-          [disabled]="selectedInst.estado?.nombre === '07-Confirmado' || isReloadingInstitutoData">
+          [disabled]="['07-Confirmado','08-Declinado'].includes(selectedInst.estado?.nombre ?? '')
+                      || isReloadingInstitutoData">
           
           REGISTRAR NUEVA ACCIÓN
         </button>
