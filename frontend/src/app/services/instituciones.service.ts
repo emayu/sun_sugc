@@ -22,6 +22,13 @@ export class InstitucionesService extends AbstractService{
       );
    }
 
+   getAllAdmin():Observable<any>{
+    return this.http.get(`${this.BASE_API_URL}/all`)
+      .pipe(
+        map( (response:any) => response.data),
+        catchError(this.handleError)
+      );
+   }
 
    getAll():Observable<any>{
     return this.http.get(this.BASE_API_URL)

@@ -27,3 +27,17 @@ export function requireLogin(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+export function requireRole(allowedRoles: string[]) {
+    return (req: Request, res: Response, next: NextFunction) => {
+        const { roles } = req.user;
+        const hasPermission = roles.some(role => allowedRoles.includes(role));
+        if (hasPermission) {
+            return next();
+        }
+        return sendResponse(res, 401, {
+            status: 'fail',
+            message: 'No autorizado. No tienes los permisos suficientes.',
+        });
+    }
+}
+

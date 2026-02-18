@@ -6,6 +6,7 @@ import { EstadoInstitucion } from "./estadoInstitucion.model";
 
 
 Institucion.belongsTo( EstadoInstitucion, {foreignKey:'id_estado_institucion', as:'estado'});
+Institucion.belongsTo(Usuario, {foreignKey: 'id_responsable',  as: 'responsable'});
 
 
 Bitacora.belongsTo(Institucion, {foreignKey: 'id_institucion'});

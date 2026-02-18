@@ -56,6 +56,11 @@ export class AuthService extends AbstractService {
     return {};
   }
 
+  hasRoles(allowedRoles:string[]){
+    const { roles:userRoles = [] }:{roles:string[]} = this.getDecodedJWTPayload();
+    return userRoles.some(userRole => allowedRoles.includes(userRole));
+  }
+
   getSessionToken(){
     return localStorage.getItem('token');
   }
@@ -65,4 +70,14 @@ export class AuthService extends AbstractService {
   }
 
 
+}
+
+
+export interface UserSession {
+      subId: number;
+      email: string;
+      roles: string[];
+      jti: string;
+      iat: number;
+      exp: number
 }

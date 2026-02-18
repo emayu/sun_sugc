@@ -3,7 +3,7 @@ import {Usuario, UsuarioCreationModel, UsuarioModel} from "../models/usuario.mod
 
 export class UsuarioRepository{
     static async findByEmail(email:string){
-        const usuario = await Usuario.findOne({where: {email}});
+        const usuario = await Usuario.scope('withPasswordHash').findOne({where: {email} });
         return usuario;
     }
 

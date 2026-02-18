@@ -50,7 +50,11 @@ export class LoginComponent {
     this.authService.login(loginData).subscribe({
       next: res => {
         this.snackBar.open('✅ ¡Bienvenido!', 'x', { duration: 3000 });
-        this.router.navigate(['/dashboard']);
+        if(this.authService.hasRoles(["admin"])){
+          this.router.navigate(['/instituciones']);
+        }else{
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: err =>{
         console.log('error recibido:', err);

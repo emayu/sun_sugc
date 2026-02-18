@@ -3,6 +3,12 @@ import { sequelize } from "../config/database";
 import { Institucion, InstitucionModel } from "../models/institucion.model";
 
 export class InstitucionRepository{
+    static findAll(){
+        return Institucion.findAll({
+            include: ['estado', 'responsable'],
+            order: ['id'],
+        });
+    }
     static async findByResponsable(idResponsable:number):Promise<InstitucionModel[]> {
         return Institucion.findAll({ 
             where: { id_responsable: idResponsable},
