@@ -6,7 +6,7 @@ export class InstitucionRepository{
     static findAll(){
         return Institucion.findAll({
             include: ['estado', 'responsable'],
-            order: ['id'],
+            order: ['id_responsable', 'id'],
         });
     }
     static async findByResponsable(idResponsable:number):Promise<InstitucionModel[]> {
