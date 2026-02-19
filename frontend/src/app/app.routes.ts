@@ -16,7 +16,7 @@ export const routes: Routes = [
     },
     {
         path: 'instituciones',
-        loadComponent: () => import('./pages/instituciones-admin/institutos-admin.component').then( m => m.InstitutosAdminComponent ),
+        loadComponent: () => import('./pages/institutos-admin/institutos-admin.component').then( m => m.InstitutosAdminComponent ),
         canActivate: [ authGuard, isAdminRoleGuard]
     },
     { path: '', redirectTo: 'login', pathMatch: 'full'}
