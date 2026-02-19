@@ -68,6 +68,9 @@ export interface BitacoraDto {
     resultado: ResultadoBitacoraDto;
     observaciones: string;
     proxima_llamada: Date;
+    usuario:{
+      nombre:string;
+    }
 }
 
 export interface ResultadoBitacoraDto{
