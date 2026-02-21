@@ -15,7 +15,7 @@ export interface BitacoraModel {
     proxima_llamada: Date;
 }
 
-export interface BitacoraCreationModel extends Optional<BitacoraModel, 'id'>{}
+export interface BitacoraCreationModel extends Optional<BitacoraModel, 'id'|'proxima_llamada'>{}
 
 
 export class Bitacora extends Model<BitacoraModel, BitacoraCreationModel> implements BitacoraModel{

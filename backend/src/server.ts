@@ -5,7 +5,7 @@ import helmet from "helmet";
 import apiRoutes from "./routes";
 import { sendResponse } from "./utils/sendResponse";
 import { sequelize } from "./config/database";
- 
+
 console.log( 
     'ENV:', process.env.ENV, 
     'PORT:', process.env.PORT 
@@ -13,8 +13,19 @@ console.log(
  
 const server = express(); 
 const PORT = process.env.PORT || 4001; 
- 
 const ENV = process.env.ENV || "DEV"; 
+
+function throwError(msg:String):never {
+    throw new Error(`[ENV ERROR] ${msg}`);
+}
+
+if(!process.env.EMAIL_ACCOUNT){
+    throwError('EMAIL_ACCOUNT is required');
+}
+
+if(!process.env.EMAIL_PASSWORD){
+    throwError('EMAIL_PASSWORD is required');
+}
  
 //Middlewares base 
 server.use(

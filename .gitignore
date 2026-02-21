@@ -5,3 +5,9 @@ backend/node_modules/
 .env 
 .env.* 
 !.env.dev.example 
+
+backend/assets/docs/*
+!backend/assets/docs/invitacion.example.pdf
+
+backend/assets/img/*
+!backend/assets/img/logo_footer_email.example.png

@@ -11,5 +11,6 @@ router.get('/all', requireRole(['admin']), InstitucionController.getAllInstituci
 router.get('/:id', InstitucionController.getInstitucionById)
 router.get('/:id/gestiones', GestionController.getHistorialPorInstitucion);
 router.post('/:id_institucion/gestiones', GestionController.createGestion);
+router.post('/:id/send/invitacion', GestionController.sendInvitacion);
 
 export default router;
