@@ -38,15 +38,19 @@ export class MailerService {
                             en las fechas del 17 al 20 de marzo del año en curso, en la Ciudad Universitaria Zona 12.
                         </p>
                         <p>
-                            Por lo anterior se <b>adjunta Oficio de invitación</b>, con los detalles oficiales del evento.
-                            Les solicitamos cordialmente revisar dicho documento para proceder con su registro
+                            Por lo anterior se <b>adjunta Oficio de invitación</b>, con los detalles oficiales y el enlace para su registro.
+                            Les solicitamos cordialmente revisar dicho documento.
+                        </p>
+
+                        <p style="margin-bottom: 20px;">
+                            En caso de tener dificultades para abrir el enlace desde el documento PDF, puede utilizar el siguiente botón de acceso directo:
                         </p>
 
                         <div style="margin: 25px 0;">
                             <a href="https://forms.gle/tVFwunc5mcrPY7Jn9" 
                                 target="_blank" 
                                 style="background-color: #1a73e8; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
-                                Formulario de participación Aquí
+                                Acceder al Formulario de participación
                             </a>
                         </div>
                         
