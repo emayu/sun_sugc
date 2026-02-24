@@ -20,6 +20,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { StatusInstitutosBadgeComponent } from '../../components/status-institutos-badge/status-institutos-badge.component';
 import { ModalGestionComponent } from '../../components/modal-gestion/modal-gestion.component';
+import { DialogEnvioInvitacionComponent } from '../../components/dialog-envio-invitacion/dialog-envio-invitacion.component';
 
 @Component({
   selector: 'app-institutos-admin',
@@ -96,16 +97,25 @@ export class InstitutosAdminComponent implements OnInit {
 				this.dataSource.data[index] = updatedInstitucion;
 				this.dataSource.data = [...this.dataSource.data];
 			}
-			this.verDetalle(updatedInstitucion, null);
+			this.reloadBitacoraHistorial();
 		}
 	})
     
   }
 
+  reloadBitacoraHistorial(){
+	  if (this.selectedInst) {
+		  this.historial = []; //limpiar historial antes de abrir el panel
+		  this.isLoadingHistorial = true;
+		  this.institucionesService.getHistorial(this.selectedInst.id!).subscribe(response => {
+			  this.historial = response;
+		  }).add(() => this.isLoadingHistorial = false);
+	  }
+  }
+
   verDetalle(inst:InstitucionDto, sidenav:any){
 	this.selectedInst = inst;
-	this.historial = []; //limpiar historial antes de abrir el panel
-		
+	this.reloadBitacoraHistorial();
     sidenav?.open();
 	this.isReloadingInstitutoData = true;
 	this.institucionesService.getById(inst.id!).subscribe( institutoFetchedData =>{
@@ -118,10 +128,7 @@ export class InstitutosAdminComponent implements OnInit {
 		}
 	}).add( () => this.isReloadingInstitutoData = false );
 
-	this.isLoadingHistorial = true;
-	this.institucionesService.getHistorial(inst.id!).subscribe(response =>{
-		this.historial = response;
-	}).add( ()=> this.isLoadingHistorial = false );
+	
 	
   }
 
@@ -136,6 +143,25 @@ export class InstitutosAdminComponent implements OnInit {
   onTextCopied(){
 	this.snackBar.open('Texto copiado!', 'x', { duration: 1500 });
   }
+
+  openDialogResentEmail(inst:InstitucionDto){
+	
+	const sentEmailsDialog = this.dialog.open(DialogEnvioInvitacionComponent, {
+		data: inst
+	});
+	sentEmailsDialog.afterClosed().subscribe(result =>{
+		if(result){
+			const {institucion:updatedInstitucion} = result;
+			const index = this.dataSource.data.findIndex( i => i.id === this.selectedInst?.id);
+			if(index !== -1){
+				this.dataSource.data[index] = updatedInstitucion;
+				this.dataSource.data = [...this.dataSource.data];
+			}
+			this.reloadBitacoraHistorial();
+		}
+	});
+  }
+
 
 }
 

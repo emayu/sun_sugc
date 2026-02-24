@@ -53,6 +53,14 @@ export class InstitucionesService extends AbstractService{
         catchError(this.handleError)
       );
   }
+
+  sendInvitacionEmail(id:number, data:any){
+    return this.http.post(`${this.BASE_API_URL}/${id}/send/invitacion`, data)
+      .pipe(
+        map((response:any) => response.data),
+        catchError(this.handleError)
+      );
+  }
 }
 
 
