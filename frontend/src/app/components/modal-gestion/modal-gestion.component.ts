@@ -56,7 +56,6 @@ export class ModalGestionComponent implements OnInit {
   ngOnInit(): void {
     this.resultadoGestionService.getAll().subscribe({
       next: result => {
-        console.log(result);
         this.resultadosGestion = result;
       }
     });
