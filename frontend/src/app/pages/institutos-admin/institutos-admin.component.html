@@ -27,7 +27,7 @@
 
       <div class="sidebar-content">
         <section class="info-card">
-          <app-status-institutos-badge [estado]="selectedInst.estado"></app-status-institutos-badge>
+          <app-status-institutos-badge [estado]="selectedInst.estado"></app-status-institutos-badge> Confirmados: {{ selectedInst.cantidad_graduandos}}
           <h2>{{ selectedInst.nombre_establecimiento }} <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.nombre_establecimiento" (cdkCopyToClipboardCopied)="onTextCopied()"><mat-icon>content_copy</mat-icon></button></h2> 
           <div class="contact-info">
             <p><strong>Código MINEDUC:</strong> {{ selectedInst.codigo_mineduc }}</p>
