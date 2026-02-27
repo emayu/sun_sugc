@@ -107,8 +107,13 @@ export class InstitutosAdminComponent implements OnInit {
 	  if (this.selectedInst) {
 		  this.historial = []; //limpiar historial antes de abrir el panel
 		  this.isLoadingHistorial = true;
-		  this.institucionesService.getHistorial(this.selectedInst.id!).subscribe(response => {
-			  this.historial = response;
+		  this.institucionesService.getHistorial(this.selectedInst.id!).subscribe({
+			next: response => {
+				this.historial = response;
+			},
+			error: err => {
+				this.snackBar.open('Error: ' + err, 'x', { duration: 3000 });
+			}
 		  }).add(() => this.isLoadingHistorial = false);
 	  }
   }
