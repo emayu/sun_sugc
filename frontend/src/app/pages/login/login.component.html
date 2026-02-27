@@ -16,8 +16,11 @@
           <input matInput formControlName="contrasena" type="password" pla >
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid">
+        <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading">
           Ingresar
+          @if(isLoading){
+            <mat-icon><mat-spinner diameter="15" ></mat-spinner></mat-icon>
+          }
         </button>
       </form>
     </mat-card-content>

@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -23,7 +25,9 @@ import { AuthService } from '../../services/auth.service';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   providers: [AuthService],
   templateUrl: './login.component.html',
@@ -36,7 +40,8 @@ export class LoginComponent {
   private snackBar = inject(MatSnackBar);
 
   private authService = inject(AuthService);
-
+  
+  isLoading = false;
   loginForm = this.fb.group({
     correo: ['', isDevMode() ? [Validators.required] : [Validators.required, Validators.email] ],
     contrasena: ['', [Validators.required, Validators.minLength(4)]]
@@ -47,6 +52,7 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
 
     const loginData = this.loginForm.value;
+    this.isLoading = true;
     this.authService.login(loginData).subscribe({
       next: res => {
         this.snackBar.open('✅ ¡Bienvenido!', 'x', { duration: 3000 });
@@ -60,7 +66,7 @@ export class LoginComponent {
         console.log('error recibido:', err);
         this.snackBar.open('Error: ' + err, 'x', { duration: 3000 });
       }
-    });
+    }).add(()=> this.isLoading = false);
     
   }
 
