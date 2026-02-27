@@ -20,6 +20,9 @@
 </header>
 }
 <main>
+  @if(isDevMode){
+        <span style="background-color: greenyellow; text-align: end; ">DEV</span>
+  }
   <mat-sidenav-container class="main-container">
     <mat-sidenav mode="side" #menuSidenav >
       <mat-nav-list>

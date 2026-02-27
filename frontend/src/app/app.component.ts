@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, isDevMode } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from './services/auth.service';
 
@@ -28,4 +28,5 @@ export class AppComponent {
   title = '-SUGC-';
   project_name = "Sistema Unificado de Gestión de Convocatoria"
   authService = inject(AuthService);
+  isDevMode = isDevMode();
 }
