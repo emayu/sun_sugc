@@ -30,16 +30,21 @@
           <app-status-institutos-badge [estado]="selectedInst.estado"></app-status-institutos-badge> Confirmados: {{ selectedInst.cantidad_graduandos}}
           <h2>{{ selectedInst.nombre_establecimiento }} <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.nombre_establecimiento" (cdkCopyToClipboardCopied)="onTextCopied()"><mat-icon>content_copy</mat-icon></button></h2> 
           <div class="contact-info">
-            <p><strong>Código MINEDUC:</strong> {{ selectedInst.codigo_mineduc }}</p>
+            <p><strong>Código MINEDUC:</strong> 
+              {{ selectedInst.codigo_mineduc }} 
+              @if(selectedInst.codigo_mineduc){
+                <button mat-icon-button color="secondary"><mat-icon >content_copy</mat-icon></button>
+              }
+            </p>
             <p><strong>Director:</strong> {{ selectedInst.director}} </p>
             <p><strong>Dirección:</strong> {{ selectedInst.direccion}} </p>
             <p><strong>Jornada:</strong> {{ selectedInst.jornada}} </p>
             <p><strong>Email principal:</strong> <a href="mailto:{{selectedInst.email_1}}">{{selectedInst.email_1}}</a>  {{ selectedInst.estado_email_1}}
-               <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.email_1" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
+               <button mat-icon-button color="secondary" [cdkCopyToClipboard]="selectedInst.email_1" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
             </p>
             @if(selectedInst.email_2){
               <p><strong>Email alternat.:</strong> <a href="mailto:{{ selectedInst.email_2}}">{{ selectedInst.email_2}}</a> {{ selectedInst.estado_email_2}}
-                <button mat-icon-button color="primary" [cdkCopyToClipboard]="selectedInst.email_2" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
+                <button mat-icon-button color="secondary" [cdkCopyToClipboard]="selectedInst.email_2" (cdkCopyToClipboardCopied)="onEmailCopied()"><mat-icon>content_copy</mat-icon></button>
               </p>
             } 
             <p><strong title="tel_1" >Teléfono principal:</strong> {{ selectedInst.tel_1}} {{ selectedInst.estado_tel_1}} </p> 
