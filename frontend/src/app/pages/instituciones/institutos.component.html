@@ -72,7 +72,9 @@
             <div class="spinner-container">
               <mat-spinner></mat-spinner> Cargando registros
             </div>
-          } @else {  
+          } @else if(errorOnLoadHistorial) {
+            <mat-error>Ocurrio un errror: {{errorOnLoadHistorial}}</mat-error>
+          } @else{  
             <div class="timeline">
               @for (h of historial; track h.id) {
               <div class="timeline-item">

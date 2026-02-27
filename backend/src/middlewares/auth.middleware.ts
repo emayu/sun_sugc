@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { sendResponse } from '../utils/sendResponse';
 import { verifyToken } from '../security/security';
 import { UserSession } from '../types/express';
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 
 export function requireLogin(req: Request, res: Response, next: NextFunction) {
     const auth = req.headers.authorization || '';
@@ -20,10 +21,22 @@ export function requireLogin(req: Request, res: Response, next: NextFunction) {
         // 4. Continuar al siguiente paso (Controlador)
         next();
     } catch (error) {
-        return sendResponse(res, 403, {
-            status: 'fail',
-            message: 'Token inválido o ha expirado'
-        });
+        if (error instanceof TokenExpiredError) {
+            return sendResponse(res, 401, {
+                status: 'fail',
+                message: 'Token expirado'
+            });
+        } else if (error instanceof JsonWebTokenError) {
+            return sendResponse(res, 401, {
+                status: 'fail',
+                message: 'Token inválido'
+            });
+        } else {
+            return sendResponse(res, 401, {
+                status: 'fail',
+                message: 'Ocurrió un error al validar Token'
+            });
+        }
     }
 }
 
@@ -34,7 +47,7 @@ export function requireRole(allowedRoles: string[]) {
         if (hasPermission) {
             return next();
         }
-        return sendResponse(res, 401, {
+        return sendResponse(res, 403, {
             status: 'fail',
             message: 'No autorizado. No tienes los permisos suficientes.',
         });

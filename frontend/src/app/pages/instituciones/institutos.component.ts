@@ -43,6 +43,7 @@ export class InstitutosComponent implements OnInit {
   selectedInst:InstitucionDto | null = null;
   historial: BitacoraDto[] = [];
   isLoadingHistorial = false;
+  errorOnLoadHistorial = '';
   isReloadingInstitutoData = false;
 
   institucionesService = inject(InstitucionesService);
@@ -119,8 +120,15 @@ export class InstitutosComponent implements OnInit {
 	}).add( () => this.isReloadingInstitutoData = false );
 
 	this.isLoadingHistorial = true;
-	this.institucionesService.getHistorial(inst.id!).subscribe(response =>{
-		this.historial = response;
+	this.errorOnLoadHistorial = '';
+	this.institucionesService.getHistorial(inst.id!).subscribe({
+		next: response =>{
+			this.historial = response;
+		},
+		error: error => {
+			console.log('onComponent', error);
+			this.errorOnLoadHistorial = error;
+		}
 	}).add( ()=> this.isLoadingHistorial = false );
 	
   }
