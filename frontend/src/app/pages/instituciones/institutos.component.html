@@ -33,7 +33,7 @@
             <p><strong>Código MINEDUC:</strong> 
               {{ selectedInst.codigo_mineduc }} 
               @if(selectedInst.codigo_mineduc){
-                <button mat-icon-button color="secondary"><mat-icon >content_copy</mat-icon></button>
+                <button mat-icon-button color="secondary" [cdkCopyToClipboard]="selectedInst.codigo_mineduc" (cdkCopyToClipboardCopied)="onTextCopied()"><mat-icon >content_copy</mat-icon></button>
               }
             </p>
             <p><strong>Director:</strong> {{ selectedInst.director}} </p>
