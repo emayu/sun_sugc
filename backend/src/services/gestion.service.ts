@@ -7,6 +7,7 @@ import { RESULTADO_GESTION } from "../models/resultadoGestion.model";
 import { BitacoraRepository } from "../repositories/bitacora.repository";
 import { InstitucionRepository } from "../repositories/institucion.repository";
 import { RestultadoGestionRepository } from "../repositories/resultadoGestion.respository";
+import { UsuarioRepository } from "../repositories/usuario.repository";
 
 
 export class GestionService{
@@ -21,8 +22,12 @@ export class GestionService{
     static async createGestion(data:BitacoraCreationModel){
 
         const institucion = await InstitucionRepository.findById(data.id_institucion);
-
-        if(institucion?.id_responsable !== data.id_usuario){
+        if(!institucion){
+            throw Error('NOT FOUND ' + data.id_institucion)
+        }
+        const user = await UsuarioRepository.findById(data.id_usuario);
+        const perms = user?.roles.split(',');
+        if (!perms?.includes('admin') && institucion?.id_responsable !== data.id_usuario){
             throw Error("FORBIDDEN");
         }
         
