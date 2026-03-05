@@ -27,7 +27,7 @@ import { InstitucionesService } from '../../services/instituciones.service';
       <h4>{{data.nombre_establecimiento}}</h4>
       <p>Confirme o agregue los correos electrónicos de destino</p>
       <div formArrayName="emails">
-        @for (control of emailsFormArray.controls; track $index) {
+        @for (control of emailsFormArray.controls; track control) {
           <div class="email-row">
             <mat-form-field  class="full-width">
               <mat-label>Correo Electrónico</mat-label>
