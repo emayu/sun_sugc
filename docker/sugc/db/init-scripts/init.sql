@@ -108,3 +108,50 @@ INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(7, '07-Conf
 INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(8, '08-Declinado', NULL);
 INSERT INTO cat_estados_institucion (id, nombre, descripcion) VALUES(9, '06-Contactado', 'Instituto contactado');
 
+--2026-03-05
+CREATE TABLE temp_confirmaciones (
+	id_interno integer NOT NULL,
+	fecha varchar NULL,
+	email_response varchar NULL,
+	participa varchar NULL,
+	nombre_centro_educativo varchar NULL,
+	codigo_mineduc varchar NULL,
+	nombre_director varchar NULL,
+	tel_principal varchar NULL,
+	tel_secundario varchar NULL,
+	cantidad_graduandos integer NULL,
+	correo_principal varchar NULL,
+	correo_secundario varchar NULL,
+	fecha_participacion varchar NULL,
+	hora_1 varchar NULL,
+	hora_2 varchar NULL,
+	hora_3 varchar NULL,
+	hora_4 varchar NULL,
+	tiene_responsable varchar NULL,
+	nombre_responsable varchar NULL,
+	tel_responsable varchar NULL,
+	confimacion_enviada bit NULL,
+    observaciones varchar NULL,
+	CONSTRAINT temp_confirmaciones_pk PRIMARY KEY (id_interno)
+);
+
+
+CREATE TABLE registro_asistencia (
+	id serial NOT NULL,
+	id_institucion integer NULL REFERENCES instituciones(id),
+	tipo_registro varchar(20) NOT NULL,
+	tipo_confirmacion varchar(20) NOT NULL,
+	nombre_institucion varchar(200) NOT NULL,
+	cantidad_estudiantes integer NOT NULL,
+	nombre_encargado varchar NULL,
+	tel_encargado varchar NULL,
+    correo_encargado varchar NULL,
+    correo_principal_institucion varchar NULL,
+	tel_principal_institucion varchar NULL,
+	observaciones text NULL,
+	fecha_registro timestamp DEFAULT now() NULL,
+    id_usuario_registro INTEGER REFERENCES usuarios(id),
+	CONSTRAINT registro_asistencia_pk PRIMARY KEY (id)
+);
+
+
