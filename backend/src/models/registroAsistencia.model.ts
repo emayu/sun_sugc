@@ -9,7 +9,7 @@ export interface RegistroAsistenciaModel {
     id_institucion: number | null;
     tipo_registro: RegistroType;
     tipo_confirmacion: ConfirmacionType;
-    nombre_institucion: string;
+    nombre_establecimiento: string;
     cantidad_estudiantes: number;
     nombre_encargado: string | null;
     tel_encargado: string | null;
@@ -29,7 +29,7 @@ export class RegistroAsistencia extends Model<RegistroAsistenciaModel, RegistroA
     id_institucion!: number | null;
     tipo_registro!: RegistroType;
     tipo_confirmacion!: ConfirmacionType;
-    nombre_institucion!: string;
+    nombre_establecimiento!: string;
     cantidad_estudiantes!: number;
     nombre_encargado!: string | null;
     tel_encargado!: string | null;
@@ -46,7 +46,7 @@ RegistroAsistencia.init({
     id_institucion: { type: DataTypes.INTEGER, allowNull: true },
     tipo_registro: { type: DataTypes.STRING(20), allowNull: false },
     tipo_confirmacion: { type: DataTypes.STRING(20), allowNull: false },
-    nombre_institucion: { type: DataTypes.STRING(200), allowNull: false },
+    nombre_establecimiento: { type: DataTypes.STRING(200), allowNull: false },
     cantidad_estudiantes: { type: DataTypes.INTEGER, allowNull: false },
     nombre_encargado: { type: DataTypes.STRING },
     tel_encargado: { type: DataTypes.STRING },

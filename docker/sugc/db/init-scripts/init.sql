@@ -141,7 +141,7 @@ CREATE TABLE registro_asistencia (
 	id_institucion integer NULL REFERENCES instituciones(id),
 	tipo_registro varchar(20) NOT NULL,
 	tipo_confirmacion varchar(20) NOT NULL,
-	nombre_institucion varchar(200) NOT NULL,
+	nombre_establecimiento varchar(200) NOT NULL,
 	cantidad_estudiantes integer NOT NULL,
 	nombre_encargado varchar NULL,
 	tel_encargado varchar NULL,

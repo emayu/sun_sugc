@@ -14,8 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { InstitucionesService, ResultadoBitacoraDto } from '../../services/instituciones.service';
-import { InstitucionDto } from '../../pages/instituciones/institutos.component';
+import { InstitucionesService, ResultadoBitacoraDto, InstitucionDto } from '../../services/instituciones.service';
 import { ResultadoGestionService } from '../../services/resultado-gestion.service';
 
 

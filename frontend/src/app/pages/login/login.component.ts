@@ -58,6 +58,8 @@ export class LoginComponent {
         this.snackBar.open('✅ ¡Bienvenido!', 'x', { duration: 3000 });
         if(this.authService.hasRoles(["admin"])){
           this.router.navigate(['/instituciones']);
+        }else if(this.authService.hasRoles(["recepcion"])){
+          this.router.navigate(['/recepcion']);
         }else{
           this.router.navigate(['/dashboard']);
         }

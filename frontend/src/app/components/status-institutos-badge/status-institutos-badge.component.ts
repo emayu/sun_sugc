@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EstadoInstitutoDto } from '../../pages/instituciones/institutos.component';
+import { EstadoInstitutoDto } from '../../services/instituciones.service';
+
 
 @Component({
   selector: 'app-status-institutos-badge',

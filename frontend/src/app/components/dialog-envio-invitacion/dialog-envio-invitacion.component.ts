@@ -7,9 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule} from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-import { InstitucionDto } from '../../pages/instituciones/institutos.component';
-import { InstitucionesService } from '../../services/instituciones.service';
+import { InstitucionesService, InstitucionDto } from '../../services/instituciones.service';
 
 
 @Component({

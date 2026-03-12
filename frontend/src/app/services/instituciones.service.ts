@@ -87,3 +87,55 @@ export interface ResultadoBitacoraDto{
     tipo: string;
     descripcion?: string;
 }
+
+
+export interface InstitucionDto {
+  id?: number;
+	codigo_mineduc: string;
+	distrito: string;
+	departamento: string;
+	municipio: string;
+	nombre_establecimiento : string;
+	direccion: string;
+	sector: string;
+	nivel: string;
+	jornada: string;
+	plan: string;
+	cantidad_graduandos: number;
+	supervisor : string;
+	director: string;
+	contacto_alterno : string;
+	id_estado_institucion: number;
+	id_responsable: number;
+	ultima_gestion_at: Date;
+	estado_mineduc: string;
+	tel_1: string;
+	estado_tel_1: string;
+	tel_2: string;
+	estado_tel_2: string;
+	email_1: string;
+	estado_email_1: string;
+	email_2: string;
+	estado_email_2: string;
+	tel_nuevo_1: string;
+	estado_tel_nuevo_1: string;
+	tel_nuevo_2: string;
+	estado_tel_nuevo_2: string;
+	tel_nuevo_3: string;
+	estado_tel_nuevo_3: string;
+	estado?: EstadoInstitutoDto;
+	responsable?: UsuarioDto;
+}
+
+export interface EstadoInstitutoDto{
+    id: number;
+    nombre: string;
+    descripcion?: string;
+}
+
+export interface UsuarioDto{
+	id: number;
+	nombre: string;
+	email: string;
+	rawRoles: string;
+}

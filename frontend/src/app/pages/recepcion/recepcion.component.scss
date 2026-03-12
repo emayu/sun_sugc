@@ -1,0 +1,51 @@
+.search-container {
+  display: flex;
+  justify-content: center; 
+  margin-bottom: 10px;
+  
+  .search-input{
+    width: 60%;
+  }
+
+}
+
+.table-wrapper {
+  position: relative; // Necesario para que el botón se posicione respecto a la tabla
+  margin-top: 30px;
+  display: block;
+  width: 100%;
+}
+
+.btn-add-table {
+  position: absolute;
+  top: -35px; // Lo eleva un poco sobre el borde de la tabla
+  right: 20px;
+  z-index: 20; // Asegura que esté por encima de la tabla
+}
+
+.table-container {
+  width: 100%;
+  overflow: auto;
+  max-height: 65vh;
+  border-radius: 4px;
+  display: block;
+}
+
+.nota {
+  font-size: 11px;
+  color: #d32f2f; // Un rojo discreto para notas
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.no-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: #fafafa;
+  border: 2px dashed #eee;
+  border-radius: 8px;
+  margin-top: 10px;
+}

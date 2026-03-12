@@ -7,7 +7,7 @@ import { ConfirmacionAsistenciaDTO } from "../dtos/asistencia.dto";
 export class ConfirmadosRepository{
     static findAll(){
         const query = `
-        select  i.id, upper(coalesce(nullif(tc.nombre_centro_educativo, ''), i.nombre_establecimiento)), i.direccion, i.departamento , i.municipio,
+        select  i.id, upper(coalesce(nullif(tc.nombre_centro_educativo, ''), i.nombre_establecimiento)) nombre_establecimiento, i.direccion, i.departamento , i.municipio,
 case when tc.participa = 'No' or  i.id_estado_institucion = 8 then 'DECLINADO'
 	when tc.participa = 'Si' then 'CONFIRMADO'
 	else 'SIN_REGISTRO'
@@ -18,6 +18,8 @@ case when tc.fecha_participacion = 'Martes 17 de marzo' then '2026-03-17'
 	when tc.fecha_participacion = 'Viernes 20 de marzo' then '2026-03-20'
 	else tc.fecha_participacion
 end as fecha_participacion,
+tc.fecha_participacion fecha_text,
+tc.cantidad_graduandos,
 coalesce(nullif(tc.hora_1, ''), nullif(tc.hora_2, ''), nullif(tc.hora_3, ''), tc.hora_4) hora_participacion,
 tc.tiene_responsable, tc.nombre_responsable, tc.tel_responsable, tc.observaciones
 from instituciones i 
