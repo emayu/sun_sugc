@@ -1,6 +1,10 @@
-<h2 mat-dialog-title>Registrar Ingreso </h2>
+<h2 mat-dialog-title>{{isEditMode ? "Editar Registro" : "Registrar Ingreso"}}</h2>
 <mat-dialog-content  [formGroup]="registroForm" class="modal-container">
-    <p *ngIf="data.estado_participacion === 'CONFIRMADO'">Confirmado para {{data.fecha_text}} {{data.hora_participacion}}</p>
+    @if(!isEditMode &&
+        tipoConfirmacionControl?.value === 'CONFIRMADO'){
+            <p >Confirmado para {{data.instituto!.fecha_text}} {{data.instituto!.hora_participacion}}</p>
+    }
+    
     <mat-form-field>
         <mat-label>Nombre Institución</mat-label>
         <input matInput formControlName="nombre_establecimiento">
@@ -8,14 +12,14 @@
 
     <div class="row">
         <mat-form-field>
-        <mat-label>Tipo Registro</mat-label>
-        <mat-select formControlName="tipo_registro">
-            <mat-option value="GRUPO_OFICIAL">Grupo Oficial</mat-option>
-            <mat-option value="INDIVIDUAL">Individual</mat-option>
-        </mat-select>
+            <mat-label>Tipo Registro</mat-label>
+            <mat-select formControlName="tipo_registro">
+                <mat-option value="GRUPO_OFICIAL">Grupo Oficial</mat-option>
+                <mat-option value="INDIVIDUAL">Individual</mat-option>
+            </mat-select>
         </mat-form-field>
 
-        <mat-form-field style="padding-left: 10px;">
+        <mat-form-field >
             <mat-label>Cantidad de estudiantes</mat-label>
             <input matInput type="number" formControlName="cantidad_estudiantes">
         </mat-form-field>
@@ -27,28 +31,30 @@
         <input matInput formControlName="nombre_encargado">
     </mat-form-field>
 
-    <mat-form-field style="padding-left: 10px;">
-        <mat-label>Celular</mat-label>
-        <input matInput formControlName="tel_encargado">
-    </mat-form-field>
+    <div class="row">
+        <mat-form-field >
+            <mat-label>Celular</mat-label>
+            <input matInput formControlName="tel_encargado">
+        </mat-form-field>
 
-    <mat-form-field *ngIf="registroForm.get('tipo_confirmacion')?.value !== 'CONFIRMADO' &&
-        registroForm.get('tipo_registro')?.value === 'GRUPO_OFICIAL' " 
-        style="padding-left: 10px;">
-        <mat-label>Correo</mat-label>
-        <input matInput formControlName="correo_encargado">
-    </mat-form-field>
+        <mat-form-field *ngIf="tipoConfirmacionControl?.value !== 'CONFIRMADO' &&
+            tipoRegistroControl?.value === 'GRUPO_OFICIAL'" >
+            <mat-label>Correo</mat-label>
+            <input matInput formControlName="correo_encargado">
+        </mat-form-field>
+    </div>
         
 
     <div *ngIf="
-        registroForm.get('tipo_confirmacion')?.value === 'SIN_REGISTRO' &&
-        registroForm.get('tipo_registro')?.value === 'GRUPO_OFICIAL'
+        tipoConfirmacionControl?.value !== 'CONFIRMADO' &&
+        tipoRegistroControl?.value === 'GRUPO_OFICIAL'
     "
      class="nuevo-registro-box">
-
-        @if(!data.id){
+        <div class="section-title">Datos de la institución </div>
+        @if(!isEditMode){
+            @if(!hasRegisterInDB){
             <p class="aviso">🛑 Esta institución no tiene registros previos. Favor completar:</p>
-        }@else {
+            }@else {
             <p class="aviso">
                 ⚠️ Esta institución ya existe en la db, puede:
                 <button mat-raised-button color="secondary" (click)="consultarInstituto()">
@@ -56,21 +62,36 @@
                     Consultar información
                 </button>
             </p>
+            }
         }
-        <div class="row-flex">
+
+        <div class="row">
             <mat-form-field appearance="outline">
-            <mat-label>Teléfono Institución</mat-label>
-            <input matInput formControlName="tel_principal_institucion" required>
+                <mat-label>Teléfono Institución</mat-label>
+                <input matInput formControlName="tel_principal_institucion" required>
             </mat-form-field>
-            <mat-form-field appearance="outline" style="padding-left: 10px;">
-            <mat-label>Email Institución</mat-label>
-            <input matInput formControlName="correo_principal_institucion" required>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Email Institución</mat-label>
+                <input matInput formControlName="correo_principal_institucion" required>
             </mat-form-field>
         </div>
     </div>
     
 
-    
+    <mat-form-field>
+            <mat-label>Salón Asignado</mat-label>
+            <mat-select formControlName="salon_asignado"  >
+                <mat-option value="ARQUITECTURA">Arquitectura</mat-option>
+                <mat-option value="INGENIERIA">Ingeniería</mat-option>
+                <mat-option value="ODONTOLOGIA">Odontología</mat-option>
+                <mat-option value="CIENCIA_POLITICA">Ciencia Política</mat-option>
+                <mat-option value="HUMANIDADES">Humanidades</mat-option>
+                <mat-option value="ECONOMICAS">Económicas</mat-option>
+                <mat-option value="CIENCIAS_JURIDICAS">Ciencias Jurídicas</mat-option>
+                <mat-option value="SALON_109_ECONOMICAS">Salón 109 Económicas</mat-option>
+            </mat-select>
+    </mat-form-field>
     
     
     <mat-form-field>
@@ -82,7 +103,11 @@
 <mat-dialog-actions align="end">
     <button mat-button color="primary" (click)="guardar()">
         <mat-icon *ngIf="isSaving"><mat-spinner diameter="15"></mat-spinner></mat-icon>
-        Guardar
+        @if (isEditMode) {
+            Editar
+        }@else {
+            Guardar
+        }
     </button>
     <button mat-button color="secondary" mat-dialog-close>
         Cancelar

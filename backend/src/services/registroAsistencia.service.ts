@@ -8,6 +8,14 @@ export class RegistroAsistenciaService{
         return RegistroAsistenciasRepository.findAll();
     }
 
+    static getByFecha(fecha_participacion:string){
+        if(fecha_participacion == 'hoy'){
+            return RegistroAsistenciasRepository.findByFechaRegistro(new Date());
+        }else {
+            return RegistroAsistenciasRepository.findAll();
+        }
+    }
+
     static createRegistroAsistencia(newRegistro:RegistroAsistenciaCreationModel){
         return RegistroAsistenciasRepository.create(newRegistro);
     }

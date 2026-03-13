@@ -148,8 +148,9 @@ CREATE TABLE registro_asistencia (
     correo_encargado varchar NULL,
     correo_principal_institucion varchar NULL,
 	tel_principal_institucion varchar NULL,
+    salon_asignado varchar NULL,
 	observaciones text NULL,
-	fecha_registro timestamp DEFAULT now() NULL,
+	fecha_registro timestamp with time zone DEFAULT now(),
     id_usuario_registro INTEGER REFERENCES usuarios(id),
 	CONSTRAINT registro_asistencia_pk PRIMARY KEY (id)
 );

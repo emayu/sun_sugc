@@ -39,7 +39,7 @@ export class RecepcionComponent implements OnInit {
   ngOnInit(): void {
     this.confirmadosService.getAll()
     .subscribe({ next: response => {
-      console.log(response);
+      // console.log(response);
       this.confirmadosList =  response;
       this.filtradosList = response;
     }})
@@ -76,17 +76,20 @@ export class RecepcionComponent implements OnInit {
     text.toLocaleUpperCase
   }
 
-  abrirRegistro(data: any) {
+  abrirRegistro(data: InstitutoConfirmadoDTO) {
     const dialog = this.dialog.open(ModalRegistroComponent, {
-      data,
+      data: {
+        mode: 'CREATE',
+        instituto: data
+      },
       width: '750px',
     });
     dialog.afterClosed().subscribe( result =>{
       if(result){
         this.searchTerm = '';
         this.onSearch();
-        this.setFocus();
       }
+      this.setFocus();
     });
   }
 
@@ -94,18 +97,20 @@ export class RecepcionComponent implements OnInit {
     const newInstituto:InstitutoConfirmadoDTO = {
       nombre_establecimiento: newName,
       estado_participacion: "SIN_REGISTRO"
-    };
+    };CommonModule
     const dialog = this.dialog.open(ModalRegistroComponent, {
-      data: newInstituto,
+      data: {
+        mode: 'CREATE',
+        instituto: newInstituto
+      },
       width: '750px',
     });
     dialog.afterClosed().subscribe( result =>{
       if(result){
-        console.log('ejecutando limpieza');
         this.searchTerm = '';
         this.onSearch();
-        this.setFocus();
       }
+      this.setFocus();
     });
   }
 }

@@ -14,6 +14,8 @@ Bitacora.belongsTo(Institucion, {foreignKey: 'id_institucion'});
 Bitacora.belongsTo(ResultadoGestion, {foreignKey: 'id_resultado',  as:'resultado'})
 Bitacora.belongsTo(Usuario, {foreignKey: 'id_usuario', as: 'usuario'})
 
+RegistroAsistencia.belongsTo(Usuario, {foreignKey: 'id_usuario_registro', as:'usuario'});
+
 export {
     Usuario,
     Institucion,

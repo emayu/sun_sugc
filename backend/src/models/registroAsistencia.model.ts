@@ -16,6 +16,7 @@ export interface RegistroAsistenciaModel {
     correo_encargado: string | null;
     correo_principal_institucion: string | null;
     tel_principal_institucion: string | null;
+    salon_asignado: string | null;
     observaciones: string | null;
     fecha_registro: Date;
     id_usuario_registro: number;
@@ -36,6 +37,7 @@ export class RegistroAsistencia extends Model<RegistroAsistenciaModel, RegistroA
     correo_encargado!: string | null;
     correo_principal_institucion!: string | null;
     tel_principal_institucion!: string | null;
+    salon_asignado!: string | null;
     observaciones!: string | null;
     fecha_registro!: Date;
     id_usuario_registro!: number;
@@ -53,6 +55,7 @@ RegistroAsistencia.init({
     correo_encargado: { type: DataTypes.STRING },
     correo_principal_institucion: { type: DataTypes.STRING },
     tel_principal_institucion: { type: DataTypes.STRING },
+    salon_asignado: { type: DataTypes.STRING},
     observaciones: { type: DataTypes.STRING },
     fecha_registro: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     id_usuario_registro: { type: DataTypes.INTEGER },

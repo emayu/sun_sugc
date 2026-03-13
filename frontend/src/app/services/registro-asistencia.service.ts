@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractService } from './abstract.service';
 import { catchError, map, Observable } from 'rxjs';
@@ -12,13 +12,15 @@ export class RegistroAsistenciaService extends AbstractService {
 
   constructor(private http: HttpClient) { super(); }
 
-  getAll(): Observable<any> {
-    return this.http.get(this.BASE_API_URL)
+  getAll(fecha_participacion:string = "hoy"): Observable<any> {
+    const params = new HttpParams().set('fecha_registro', fecha_participacion);
+    return this.http.get(`${this.BASE_API_URL}`, { params })
       .pipe(
         map((response: any) => response.data),
         catchError(this.handleError)
       );
   }
+
 
   createRegistroAsistencia(data:RegistroAsistenciaDTO){
       return this.http.post(`${this.BASE_API_URL}`, data)
@@ -29,7 +31,7 @@ export class RegistroAsistenciaService extends AbstractService {
   }
 
   updateRegistroAsistencia(id:number, data:RegistroAsistenciaDTO){
-      return this.http.post(`${this.BASE_API_URL}/${id}`, data)
+      return this.http.put(`${this.BASE_API_URL}/${id}`, data)
         .pipe(
           map((response: any) => response.data),
           catchError(this.handleError)
@@ -51,7 +53,11 @@ export interface RegistroAsistenciaDTO {
   correo_encargado?: string;
   correo_principal_institucion?: string;
   tel_principal_institucion?: string;
+  salon_asignado: string;
   observaciones?: string | null;
   fecha_registro: Date;
   id_usuario_registro: number;
+  usuario?: {
+    nombre: string;
+  }
 }

@@ -1,0 +1,70 @@
+.presentes-container {
+  padding: 10px;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap; 
+  
+
+  .card-metrica {
+    // flex: 1;
+    // min-width: 100px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    border-left: 5px solid #3f51b5;
+    
+    
+
+    mat-card-subtitle {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    //   font-size: 0.75rem;
+      color: #666;
+    //   margin-bottom: 8px;
+    }
+
+    mat-card-title {
+    //   font-size: 2rem;
+    //   font-weight: 700;
+      color: #333;
+      margin: 0;
+    }
+  }
+}
+
+.toolbar-tabla {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: center;
+  column-gap: 0.5em;
+  
+  margin-bottom: 16px;
+
+  mat-form-field {
+    width: 250px;
+  }
+}
+
+.tipo-tag {
+  font-size: 10px;
+  background: #eee;
+  padding: 2px 6px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.observaciones{
+  font-size: 11px;
+  color: #515151;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.td-cantidad-estudiantes{
+  text-align: right;
+}

@@ -4,3 +4,15 @@
   gap: 10px;
 //   padding-top: 10px;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;     
+  width: 100%;
+
+  mat-form-field {
+    flex: 1;       
+    width: 100%;   
+  }
+}

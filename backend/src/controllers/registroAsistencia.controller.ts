@@ -7,8 +7,9 @@ import { RegistroAsistenciaCreationModel, RegistroAsistenciaModel } from "../mod
 
 export class RegistroAsistenciaController{
     static async getRegistros(req:Request, res:Response){
-        const confirmados = await RegistroAsistenciaService.getAll();
-        sendResponse(res, 200, {status:"success", message:"Lista de instituciones registradas", data: confirmados});
+        const fecha_registro = req.query.fecha_registro?.toString() || "hoy";
+        const registrados = await RegistroAsistenciaService.getByFecha(fecha_registro);
+        sendResponse(res, 200, {status:"success", message:"Lista de instituciones registradas", data: registrados});
     }
 
     static async createRegistro(req:TypedRequestBody<RegistroAsistenciaCreationModel>, res:Response){
@@ -40,9 +41,10 @@ export class RegistroAsistenciaController{
             //Asegurar datos 
             const updateData : Partial<RegistroAsistenciaModel> = {
                 tipo_registro : data.tipo_registro,
-                nombre_institucion : data.nombre_institucion,
+                nombre_establecimiento : data.nombre_establecimiento,
                 cantidad_estudiantes: data.cantidad_estudiantes,
                 nombre_encargado: data.nombre_encargado,
+                salon_asignado: data.salon_asignado,
                 tel_encargado: data.tel_encargado,
                 observaciones: data.observaciones
 
