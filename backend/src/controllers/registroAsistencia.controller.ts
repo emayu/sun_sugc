@@ -46,7 +46,11 @@ export class RegistroAsistenciaController{
                 nombre_encargado: data.nombre_encargado,
                 salon_asignado: data.salon_asignado,
                 tel_encargado: data.tel_encargado,
-                observaciones: data.observaciones
+                observaciones: data.observaciones,
+                correo_encargado: data.correo_encargado,
+                correo_principal_institucion: data.correo_principal_institucion,
+                tel_principal_institucion: data.tel_principal_institucion
+
 
             }
             const result = await RegistroAsistenciaService.updateRegistroAsistencia(registroId, updateData);
