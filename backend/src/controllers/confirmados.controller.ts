@@ -5,8 +5,13 @@ import { GSheeSyncService } from "../services/gsheet-sync"
 
 export class ConfirmadosController{
     static async getConfirmados(req:Request, res:Response){
-        const confirmados = await ConfirmacionService.getAllInstituciones();
-        sendResponse(res, 200, {status:"success", message:"Lista de instituciones confirmadas", data: confirmados});
+        try{
+            const confirmados = await ConfirmacionService.getAllInstituciones();
+            sendResponse(res, 200, {status:"success", message:"Lista de instituciones confirmadas", data: confirmados});
+        }catch(error:any){
+            console.error(error);
+            sendResponse(res, 500, {status:"error", message:error.message});
+        }
     }
 
 
