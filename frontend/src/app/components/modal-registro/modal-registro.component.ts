@@ -128,7 +128,7 @@ export class ModalRegistroComponent implements OnInit {
         correoInstitucion?.clearValidators();
         correoInstitucion?.patchValue('');
         telefonoEncargado?.clearValidators();
-        telefonoEncargado?.patchValue('');
+        
       }
       telInstitucion?.updateValueAndValidity();
       correoInstitucion?.updateValueAndValidity();
