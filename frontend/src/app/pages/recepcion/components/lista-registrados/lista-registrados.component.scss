@@ -39,8 +39,9 @@
 .toolbar-tabla {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: baseline;
   align-self: center;
+  
   column-gap: 0.5em;
   
   margin-bottom: 16px;

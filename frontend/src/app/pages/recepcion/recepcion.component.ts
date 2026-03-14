@@ -11,6 +11,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModalRegistroComponent } from '../../components/modal-registro/modal-registro.component';
 import { ListaRegistradosComponent } from "./components/lista-registrados/lista-registrados.component";
+import { AuthService } from '../../services/auth.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { switchMap } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-recepcion',
@@ -21,7 +25,8 @@ import { ListaRegistradosComponent } from "./components/lista-registrados/lista-
     MatFormFieldModule,
     MatIconModule, MatButtonModule,
     MatTableModule, MatDialogModule,
-    ListaRegistradosComponent
+    ListaRegistradosComponent,
+    MatSnackBarModule, MatProgressSpinnerModule
 ],
   templateUrl: './recepcion.component.html',
   styleUrl: './recepcion.component.scss'
@@ -34,7 +39,10 @@ export class RecepcionComponent implements OnInit {
   searchTerm: string = '';
   @ViewChild('searchInput') searchInput!: ElementRef;
   confirmadosService = inject(ConfirmadosService);
+  authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
+  isSync = false;
 
   ngOnInit(): void {
     this.confirmadosService.getAll()
@@ -112,5 +120,22 @@ export class RecepcionComponent implements OnInit {
       }
       this.setFocus();
     });
+  }
+
+  syncRegistros() {
+    this.isSync = true;
+    this.confirmadosService.sync()
+      .pipe(switchMap(syncResponse => this.confirmadosService.getAll()))
+      .subscribe({
+        next: response => {
+          this.confirmadosList =  response;
+          this.onSearch();
+          this.snackBar.open('✅ Sincronizado! ', 'x', { duration: 3000 });
+        },
+        error: error => {
+
+        }
+      })
+      .add( ()=>this.isSync = false);
   }
 }

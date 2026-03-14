@@ -20,6 +20,14 @@ export class ConfirmadosService extends AbstractService {
       );
   }
 
+  sync():Observable<any>{
+    return this.http.post(`${this.BASE_API_URL}/sync`, null)
+    .pipe(
+        map((response: any) => response.data),
+        catchError(this.handleError)
+      );
+  }
+
 }
 
 
